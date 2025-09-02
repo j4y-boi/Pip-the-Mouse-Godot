@@ -1,9 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://b8516ow1owkn1"]
+[gd_scene load_steps=36 format=3 uid="uid://b8516ow1owkn1"]
 
 [ext_resource type="Texture2D" uid="uid://cbol88f7omydm" path="res://assets/pip/died_mouse.bmp" id="1_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://4mha4sre77b1" path="res://assets/pip/idle_mouse.bmp" id="2_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://c5vbtru2hxwpu" path="res://assets/pip/itch_mouse.bmp" id="3_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bvr5vgakcb77g" path="res://assets/pip/sleep_mouse.bmp" id="4_smehm"]
+[ext_resource type="Texture2D" uid="uid://xvjrag17omnt" path="res://assets/pip/play_mouse.bmp" id="4_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://c2akrqa0o6yec" path="res://assets/pip/walk2_mouse.bmp" id="5_ur7pv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
@@ -85,6 +86,18 @@ region = Rect2(256, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_dt7fs"]
 atlas = ExtResource("3_fjrip")
 region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("4_tuyoq")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("4_tuyoq")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("4_tuyoq")
+region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wqfne"]
 atlas = ExtResource("4_smehm")
@@ -183,7 +196,16 @@ animations = [{
 "name": &"itch",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}],
 "loop": true,
 "name": &"new_animation",
 "speed": 5.0
@@ -214,9 +236,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Node2D" type="Node2D"]
+[node name="mouse" type="Node2D"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(16, 16)
 sprite_frames = SubResource("SpriteFrames_bj30b")
-animation = &"new_animation"
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.531305

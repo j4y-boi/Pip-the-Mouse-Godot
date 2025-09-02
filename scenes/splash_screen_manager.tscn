@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://t1al5hykieb"]
+
+[ext_resource type="Script" uid="uid://dh1mojvgpsxv7" path="res://scripts/splash_screen_manager.gd" id="1_kkrr7"]
+[ext_resource type="Texture2D" uid="uid://bh8s2fjt82vw8" path="res://assets/pfp_ circle.png" id="1_pspwt"]
+[ext_resource type="PackedScene" uid="uid://bbn8hg7verlsy" path="res://scenes/game.tscn" id="2_f3wds"]
+[ext_resource type="Texture2D" uid="uid://cmsvl8eiu8bw3" path="res://assets/godot.png" id="5_f3wds"]
+
+[node name="control" type="Control" node_paths=PackedStringArray("splash_screen_container", "fg")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kkrr7")
+load_scene = ExtResource("2_f3wds")
+splash_screen_container = NodePath("CenterContainer")
+fg = NodePath("ColorRect2")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0862745, 0.0862745, 0.109804, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="j" type="TextureRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+texture = ExtResource("1_pspwt")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="godot" type="TextureRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(260, 260)
+layout_mode = 2
+texture = ExtResource("5_f3wds")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0862745, 0.0862745, 0.109804, 1)

@@ -11,8 +11,17 @@ config_version=5
 [application]
 
 config/name="pip-the-mouse-godot"
+run/main_scene="uid://t1al5hykieb"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=512
+window/size/viewport_height=512
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 

@@ -1,3 +1,47 @@
-[gd_scene format=3 uid="uid://bbn8hg7verlsy"]
+[gd_scene load_steps=8 format=3 uid="uid://bbn8hg7verlsy"]
+
+[ext_resource type="Script" uid="uid://cdu5j4ld43gc4" path="res://scripts/bg2.gd" id="1_gee14"]
+[ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="1_p57ef"]
+[ext_resource type="Script" uid="uid://buqaipatv1lkm" path="res://scripts/parallax_background.gd" id="1_u5sy4"]
+[ext_resource type="Texture2D" uid="uid://cd6786e7annhl" path="res://assets/bg/rooms/room1.png" id="2_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://b8516ow1owkn1" path="res://scenes/player.tscn" id="2_yqjtg"]
+[ext_resource type="Texture2D" uid="uid://b8vgj0dabgab2" path="res://assets/bg/sky.png" id="5_iywne"]
+[ext_resource type="Texture2D" uid="uid://bwttrrn16gde2" path="res://assets/bg/art/art1.png" id="6_p57ef"]
 
 [node name="game" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -1
+script = ExtResource("1_u5sy4")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -3
+motion_mirroring = Vector2(512, 512)
+
+[node name="sky" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+z_index = -3
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("5_iywne")
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("1_p57ef")
+
+[node name="bg" type="Node2D" parent="."]
+script = ExtResource("1_gee14")
+
+[node name="room" type="Sprite2D" parent="bg"]
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("2_0tnpc")
+
+[node name="art" type="Sprite2D" parent="bg"]
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("6_p57ef")
+
+[node name="mouse" parent="." instance=ExtResource("2_yqjtg")]
+position = Vector2(91, 297)
+scale = Vector2(5, 5)
