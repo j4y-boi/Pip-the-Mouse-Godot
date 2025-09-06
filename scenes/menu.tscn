@@ -1,0 +1,98 @@
+[gd_scene load_steps=10 format=3 uid="uid://fkkjrgm2pbhn"]
+
+[ext_resource type="Script" uid="uid://buqaipatv1lkm" path="res://scripts/parallax_background.gd" id="1_13sgg"]
+[ext_resource type="Texture2D" uid="uid://b8vgj0dabgab2" path="res://assets/bg/sky.png" id="2_i6lef"]
+[ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="3_70i5f"]
+[ext_resource type="Script" uid="uid://cdu5j4ld43gc4" path="res://scripts/bg2.gd" id="4_mj5lg"]
+[ext_resource type="Texture2D" uid="uid://cd6786e7annhl" path="res://assets/bg/rooms/room1.png" id="5_ufwb2"]
+[ext_resource type="Texture2D" uid="uid://bwttrrn16gde2" path="res://assets/bg/art/art1.png" id="6_6cdou"]
+[ext_resource type="Texture2D" uid="uid://dp8csrh220xeo" path="res://exports/logo, art n stuff/itchiobanner.png" id="7_i42df"]
+[ext_resource type="FontFile" uid="uid://btqyhp5s88ei2" path="res://assets/fonts/Delius-Regular.ttf" id="8_7jp70"]
+[ext_resource type="Script" uid="uid://b345ghsdtk365" path="res://scripts/startLogo.gd" id="8_i6lef"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="fullBG" type="Node2D" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="fullBG"]
+layer = -3
+script = ExtResource("1_13sgg")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="fullBG/ParallaxBackground"]
+z_index = -3
+motion_mirroring = Vector2(512, 0)
+
+[node name="sky" type="Sprite2D" parent="fullBG/ParallaxBackground/ParallaxLayer"]
+z_index = -3
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("2_i6lef")
+
+[node name="Sprite2D" type="Sprite2D" parent="fullBG/ParallaxBackground/ParallaxLayer"]
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("3_70i5f")
+
+[node name="bg" type="Node2D" parent="fullBG"]
+z_index = -1
+script = ExtResource("4_mj5lg")
+
+[node name="room" type="Sprite2D" parent="fullBG/bg"]
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("5_ufwb2")
+
+[node name="art" type="Sprite2D" parent="fullBG/bg"]
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("6_6cdou")
+
+[node name="Itchiobanner" type="Sprite2D" parent="."]
+position = Vector2(256, 100)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("7_i42df")
+script = ExtResource("8_i6lef")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = -294.0
+offset_right = 66.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 40
+text = "Start Game
+"
+
+[node name="settings" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 40
+text = "Options"
+
+[node name="quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 40
+text = "Exit"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "created by j4y_boi (duh)"

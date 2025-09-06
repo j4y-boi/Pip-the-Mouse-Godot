@@ -7,19 +7,16 @@ extends Node2D
 var aliveTime = 0.0
 var consecutiveEvents = 0
 var currentAnim = "idle"
-var isWalking = false
 
-var walkx = 0.0
-var walky = 0.0
-var startx = 0.0
-var starty = 0.0
-var repeatset = 120
-var repeat = 0
+var isWalking = false
+var target = Vector2(0,0)
+var speed = 50.0
 
 func _ready() -> void:
 	mouse.position.x = save.contents_to_save.mousex
 	mouse.position.y = save.contents_to_save.mousey
 	aliveTime = float(save.contents_to_save.timeAlive)
+	mouseSprite.position = Vector2(0,0)
 	eventTimer.start()
 
 func returnToIdle():
@@ -27,26 +24,16 @@ func returnToIdle():
 	mouseSprite.play("idle")
 	currentAnim = "idle"
 
-func walkto(x,y):
+func walkto(x, y):
+	target = Vector2(x, y)
 	isWalking = true
-	startx = mouse.position.x
-	starty = mouse.position.y
-	repeat = repeatset
-	
-	var diffX = x - mouse.position.x 
-	var diffY = y - mouse.position.y
+	mouseSprite.flip_h = x < mouse.position.x
+	mouseSprite.play("walk")
 
 	if x < mouse.position.x:
 		mouseSprite.flip_h = true
 	else:
 		mouseSprite.flip_h = false
-	if repeat == 0:
-		walkx = 0
-		walky = 0
-
-	walkx = diffX / repeat
-	walky = diffY / repeat
-	mouseSprite.play("walk")
 
 func chooseEvent():
 	var theChoice = randi_range(1,10)
@@ -84,22 +71,25 @@ func _on_sprite_animation_finished() -> void:
 	print("stop moving")
 	returnToIdle()
 	
-func _input(_event):
-	if currentAnim == "sleep":
+func _input(event):
+	if currentAnim == "sleep" and event is InputEventKey and event.pressed:
 		returnToIdle()
 		eventTimer.start()
 
 func _process(delta: float) -> void:
-	aliveTime += delta
+	aliveTime += delta # i dunno if there are better way to do this
 	
-	if repeat == 0 and isWalking:
-		isWalking = false
-		returnToIdle()
-	if isWalking:
-		mouse.position.x += walkx
-		mouse.position.y += walky
-		print("|startx: "+str(startx)+"|starty: "+ str(starty)+"|walkx: "+str(walkx)+"|walky: "+str(walky))
-		repeat -= 1
+	# just writing this here so i dont forget
+	if isWalking: #check if mous is wandering
+		var to_target = target - mouse.position #get a walk target using chosen xy target and mouse xy
+		var step = speed * delta #calculate actual speed (decoupled from fps)
+
+		if to_target.length() <= step: #if is at (or close enough to) destenation
+			mouse.position = target
+			isWalking = false
+			returnToIdle()
+		else:
+			mouse.position += to_target.normalized() * step # w a l c
 	
 	mouse.position.x = clamp(mouse.position.x, 65, 447) #holy shit this is way better
 	mouse.position.y = clamp(mouse.position.y, 310, 448)

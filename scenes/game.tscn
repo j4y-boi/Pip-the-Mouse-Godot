@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bbn8hg7verlsy"]
+[gd_scene load_steps=52 format=3 uid="uid://bbn8hg7verlsy"]
 
 [ext_resource type="Script" uid="uid://bduil1pf3acyu" path="res://scripts/savesystem.gd" id="1_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="1_p57ef"]
@@ -15,6 +15,11 @@
 [ext_resource type="Texture2D" uid="uid://bvr5vgakcb77g" path="res://assets/pip/sleep_mouse.bmp" id="11_rysoc"]
 [ext_resource type="Texture2D" uid="uid://c2akrqa0o6yec" path="res://assets/pip/walk2_mouse.bmp" id="12_ssvqc"]
 [ext_resource type="Texture2D" uid="uid://c682iw7738y74" path="res://assets/pip/look.png" id="13_ir15t"]
+[ext_resource type="Texture2D" uid="uid://cae0fcy5m3h3s" path="res://assets/food/apple_slice.bmp" id="16_ca42v"]
+[ext_resource type="Texture2D" uid="uid://uscnwqras3le" path="res://assets/gui/panel.png" id="17_1kice"]
+[ext_resource type="FontFile" uid="uid://btqyhp5s88ei2" path="res://assets/fonts/Delius-Regular.ttf" id="17_ssvqc"]
+[ext_resource type="Script" uid="uid://dl6unu3a38hgi" path="res://scripts/topGUI.gd" id="18_37s47"]
+[ext_resource type="Texture2D" uid="uid://b1sdcim1hdl0f" path="res://assets/gui/heart.png" id="20_5newe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
 atlas = ExtResource("10_ca42v")
@@ -274,7 +279,7 @@ unique_name_in_owner = true
 script = ExtResource("1_0tnpc")
 
 [node name="Autosave" type="Timer" parent="Save"]
-wait_time = 10.0
+wait_time = 30.0
 autostart = true
 
 [node name="WaitUntilSave" type="Timer" parent="Save"]
@@ -282,7 +287,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-layer = -1
+layer = -3
 script = ExtResource("1_u5sy4")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -301,6 +306,7 @@ scale = Vector2(4, 4)
 texture = ExtResource("1_p57ef")
 
 [node name="bg" type="Node2D" parent="."]
+z_index = -1
 script = ExtResource("4_gee14")
 
 [node name="room" type="Sprite2D" parent="bg"]
@@ -314,8 +320,8 @@ scale = Vector2(4, 4)
 texture = ExtResource("6_p57ef")
 
 [node name="mouse" type="Node2D" parent="."]
-z_index = 5
-position = Vector2(447, 449)
+z_index = 3
+position = Vector2(118, 380)
 scale = Vector2(4, 4)
 script = ExtResource("7_trtic")
 
@@ -327,6 +333,43 @@ one_shot = true
 sprite_frames = SubResource("SpriteFrames_bj30b")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="food" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(358, 433)
+scale = Vector2(3, 3)
+skew = 0.0314159
+texture = ExtResource("16_ca42v")
+
+[node name="Control" type="Control" parent="."]
+z_index = 999
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Sprite2D" parent="Control"]
+position = Vector2(256, -256)
+scale = Vector2(4, 4)
+texture = ExtResource("17_1kice")
+script = ExtResource("18_37s47")
+
+[node name="Label" type="Label" parent="Control/Panel"]
+offset_left = -58.0
+offset_top = 41.0
+offset_right = 330.0
+offset_bottom = 105.0
+scale = Vector2(0.3, 0.3)
+theme_override_fonts/font = ExtResource("17_ssvqc")
+theme_override_font_sizes/font_size = 40
+text = "Time alive: 00:00"
+
+[node name="icon" type="Sprite2D" parent="Control/Panel"]
+position = Vector2(46.75, 48.5)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("20_5newe")
 
 [connection signal="timeout" from="Save/Autosave" to="Save" method="_on_autosave_timeout"]
 [connection signal="timeout" from="Save/Autosave" to="mouse" method="_on_autosave_timeout"]
