@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://bbn8hg7verlsy"]
+[gd_scene load_steps=58 format=3 uid="uid://bbn8hg7verlsy"]
 
 [ext_resource type="Script" uid="uid://bduil1pf3acyu" path="res://scripts/savesystem.gd" id="1_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="1_p57ef"]
@@ -24,6 +24,8 @@
 [ext_resource type="Texture2D" uid="uid://b1sdcim1hdl0f" path="res://assets/gui/heart.png" id="20_5newe"]
 [ext_resource type="Texture2D" uid="uid://c4ito5r2grbr8" path="res://assets/gui/arrow.png" id="21_e1j6l"]
 [ext_resource type="AudioStream" uid="uid://dq45eo48vy6tf" path="res://assets/audio/music/game2.ogg" id="24_e1j6l"]
+[ext_resource type="Script" uid="uid://cb1lkn50aewqc" path="res://scripts/bgm.gd" id="25_bhx41"]
+[ext_resource type="AudioStream" uid="uid://b607vnfgaaqnx" path="res://assets/audio/music/game1.mp3" id="26_qnb83"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
 atlas = ExtResource("10_ca42v")
@@ -374,24 +376,24 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("21_e1j6l")
 
 [node name="Label" type="Label" parent="Control/Panel"]
-offset_left = -58.0
-offset_top = 41.0
-offset_right = 330.0
-offset_bottom = 105.0
+offset_left = -61.0
+offset_top = 36.0
+offset_right = 345.0
+offset_bottom = 118.0
 scale = Vector2(0.3, 0.3)
 theme_override_fonts/font = ExtResource("17_ssvqc")
-theme_override_font_sizes/font_size = 40
-text = "Time alive: 00:00"
+theme_override_font_sizes/font_size = 35
+text = "time alive: 917:28"
+vertical_alignment = 1
 
 [node name="icon" type="Sprite2D" parent="Control/Panel"]
 position = Vector2(46.75, 48.5)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("20_5newe")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("24_e1j6l")
-autoplay = true
-bus = &"Music"
+[node name="bgm" type="AudioStreamPlayer2D" parent="."]
+script = ExtResource("25_bhx41")
+playlist = Array[AudioStream]([ExtResource("24_e1j6l"), ExtResource("26_qnb83")])
 
 [connection signal="timeout" from="Save/Autosave" to="Save" method="_on_autosave_timeout"]
 [connection signal="timeout" from="Save/Autosave" to="mouse" method="_on_autosave_timeout"]

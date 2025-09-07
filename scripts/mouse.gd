@@ -33,6 +33,14 @@ func _ready() -> void:
 	dead = save.contents_to_save.dead
 	mouseSprite.position = Vector2(0,0)
 	eventTimer.start()
+	
+	if dead:
+		isWalking = false
+		dead = true
+		eventTimer.stop()
+		returnToIdle()
+		mouseSprite.play("dead")
+		currentAnim = "dead"
 
 func returnToIdle():
 	mouseSprite.stop()
@@ -55,8 +63,7 @@ func chooseEvent():
 	if theChoice <= 8: #80% for a random event
 		consecutiveEvents += 1
 		print("amonation")
-		#if theChoice in [0,1,2,3]: #40% for walk
-		if true:
+		if theChoice in [0,1,2,3]: #40% for walk
 			currentAnim = "walk"
 			walkto(randi_range(65, 447),randi_range(310, 448))
 		elif theChoice in [4,5,6,7]: #40% for itch
@@ -72,6 +79,7 @@ func _on_autosave_timeout() -> void:
 	save.contents_to_save.mousey = mouse.position.y
 	save.contents_to_save.timeAlive = int(aliveTime)
 	save.contents_to_save.feedtimeleft = int(feedTimeLeft)
+	save.contents_to_save.dead = dead
 
 func _on_event_timeout() -> void:
 	if not consecutiveEvents >= eventsBeforeSleep:
@@ -94,8 +102,9 @@ func _input(event):
 		eventTimer.start()
 
 func _process(delta: float) -> void:
-	aliveTime += delta # i dunno if there are better way to do this
-	feedTimeLeft -= delta
+	if not dead:
+		aliveTime += delta # i dunno if there are better way to do this
+		feedTimeLeft -= delta
 	
 	# just writing this here so i dont forget
 	if isWalking: #check if mous is wandering
@@ -116,21 +125,19 @@ func _process(delta: float) -> void:
 	
 	var keys = food_authority.foods.keys()
 	if not keys.is_empty() and currentAnim == "idle" and currentFood == "": #if there is food and he aint doin anything
-		print("start walk")
 		var first_key = keys[0]
 		var pos = food_authority.foods[first_key]
 		walkto(pos.x,pos.y)
 		currentFood = first_key
 		eventTimer.stop()
 	if not isWalking and currentFood != "": 
-		print("reached food")
 		emit_signal("ateFood", currentFood)
 		feedTimeLeft += nutritionalValue
 		currentFood = ""
 		returnToIdle()
 		eventTimer.start()
 		
-	if feedTimeLeft <= -10 or dead:
+	if (feedTimeLeft <= -10 or feedTimeLeft >= 600) and not dead:
 		isWalking = false
 		dead = true
 		eventTimer.stop()

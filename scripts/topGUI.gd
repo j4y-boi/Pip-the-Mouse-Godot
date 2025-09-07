@@ -4,6 +4,8 @@ extends Sprite2D
 @onready var icon: Sprite2D = $icon
 @onready var time: Label = $Label
 @onready var arrow: Sprite2D = $arrow
+@onready var food_authority: Node2D = $"../../foodAuthority"
+@onready var save: Node = %Save
 
 #main gui bg vars
 var goDown = false
@@ -27,11 +29,34 @@ var start2 = 74.5
 var end2 = 64.5
 # -
 
+var uhhhh = 0.0
+var lasttime = 0
+var options = []
+var canreturn = false
+var hmmmm = 0
+var talkstage = 0
+var wasHunger = false
+
 func _ready() -> void:
 	pass # Replace with function body.
 
 func _process(delta: float) -> void:
-	if goDown:
+	uhhhh += delta
+	hmmmm = floor(uhhhh)
+	
+	if mouse.dead:
+		topguislide = -1
+	elif mouse.feedTimeLeft <= 0:
+		topguislide = -2
+	elif mouse.feedTimeLeft >= 500:
+		topguislide = -3
+		wasHunger = true
+	elif mouse.feedTimeLeft < 500 and wasHunger:
+		wasHunger = false
+		topguislide = 999
+		goDown = false
+		
+	if goDown or mouse.dead:
 		if int(all.position.y) > end-3:
 			all.position.y = end
 		else:
@@ -54,26 +79,75 @@ func _process(delta: float) -> void:
 	
 	# Directly based off of the original PTM Python code
 	var source
-	if topguislide == 0:
+	if topguislide in [0,-1]:
 		source = mouse.aliveTime
-	elif topguislide == 1:
+	elif topguislide in [1]:
 		source = mouse.feedTimeLeft
-	
-	var minutes = int(int(source) / 60)
-	var seconds = int(int(source) % 60)
+	else:
+		source = 0	
+	var hours   = int(source / 3600) % 24
+	var minutes = int(source / 60) % 60
+	var seconds = int(source) % 60
 	#---
-	if topguislide == 0:
-		var format_string = "Time alive: %s:%s"
-		time.text = format_string%["%02d" % minutes,"%02d" % seconds]
+	if topguislide == -1:
+		icon.visible = false
+		goDown = true
+		if lasttime == 0:
+			lasttime = hmmmm
+		
+		if talkstage == 0 and talkstage == 0:
+			talkstage += 1
+			if mouse.feedTimeLeft <= 0 or mouse.feedTimeLeft >= 600:
+				options = ["P-Pip? You there?","Is he okay?","Is he... Dead?"]
+			else:
+				options = ["Huh...", "That's weird.", "Wait what?"]
+			time.text = options[randi_range(0,len(options)-1)]
+		if hmmmm == lasttime+5 and talkstage == 1:
+			talkstage+=1
+			if mouse.feedTimeLeft <= 0:
+				options = ["He starved...","He ate too little...","Did you give him food?"]
+			elif mouse.feedTimeLeft >= 600:
+				options = ["That's too much food...","You fed him too much...","A bit too much food."]
+			else:
+				options = ["This death wasn't..."]
+			time.text = options[randi_range(0,len(options)-1)]
+		if hmmmm == lasttime+10 and talkstage == 2:
+			talkstage+=1
+			if mouse.feedTimeLeft <= 0:
+				options = ["He needs to eat.","Mice eat too. Feed him.","Press [LEFT] to feed"]
+			elif mouse.feedTimeLeft >= 600:
+				options = ["Mice eat less.","Give a bit less food next time.",""]
+			else:
+				options = ["Recognized?"]
+			time.text = options[randi_range(0,len(options)-1)]
+		if hmmmm == lasttime+15 and talkstage == 3:
+			talkstage+=1
+			var format_string = "He was alive for: %s:%s:%s"
+			time.text = format_string%["%02d" % hours, "%02d" % minutes,"%02d" % seconds]
+		if hmmmm == lasttime+20 and talkstage == 4:
+			talkstage+=1
+			time.text = "Press [UP] to restart."
+			canreturn = true
+	elif topguislide == -2:
+		icon.visible = false
+		goDown = true
+		time.text = "Feed Pip! He's hungry!"
+	elif topguislide == -3:
+		icon.visible = false
+		goDown = true
+		time.text = "Pls wait before feeding him"
+	elif topguislide == 0:
+		var format_string = "Time alive: %s:%s:%s"
+		time.text = format_string%["%02d" % hours, "%02d" % minutes,"%02d" % seconds]
 		var beat = 0.5 + (int(mouse.aliveTime*1.5)%2)*0.1
 		icon.texture = textured
 		icon.rotation = 0
 		icon.scale = Vector2(beat,beat)
-	if topguislide == 1:
+	elif topguislide == 1:
 		var format_string = "Hungry in: %s:%s"
 		time.text = format_string%["%02d" % minutes,"%02d" % seconds]
 		var beat = -0.5+(int(mouse.aliveTime)%2)*1
-		icon.scale = 0.8
+		icon.scale = Vector2(0.8,0.8)
 		icon.texture = textured
 		icon.rotation = beat
 	#if topguislide == 2: #adding later
@@ -83,10 +157,28 @@ func _process(delta: float) -> void:
 		#icon.scale = Vector2(beat,beat)
 
 func _input(event):
-	if event.is_action_pressed("down"):
+	var ableToChange = goDown and not mouse.dead and not topguislide < 0
+	
+	if event.is_action_pressed("down") and not mouse.dead and not topguislide < 0:
+		if topguislide == 999:
+			icon.visible = true
+			topguislide = 0
+			textured = load("res://assets/gui/heart.png")
 		goDown = !goDown
 	
-	var ableToChange = goDown and not mouse.dead
+	if event.is_action_pressed("up") and canreturn: #IMPORTANT, OTHERWISE THEY MIGHT DELETE THEIR OWN SAVE
+		print("nuked")
+		#restore save, handled by savesystem at restart
+		save.judgement.miceKilled += 1
+		if mouse.aliveTime > save.longestAlive:
+			save.longestAlive = mouse.aliveTime
+		
+		var save_path = "user://savefile.json"
+		if FileAccess.file_exists(save_path):
+			DirAccess.remove_absolute(save_path)
+		#reloads gam
+		var thegame = get_tree().current_scene.scene_file_path
+		get_tree().change_scene_to_file(thegame)
 	
 	if event.is_action_pressed("left") and ableToChange:
 		topguislide = (topguislide - 1 + slidelimit) % slidelimit  #this way itll loop back to 0 when 2+1, i am NOT doing any if statements today
