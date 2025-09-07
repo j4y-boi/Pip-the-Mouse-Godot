@@ -48,10 +48,10 @@ func _process(delta: float) -> void:
 		topguislide = -1
 	elif mouse.feedTimeLeft <= 0:
 		topguislide = -2
-	elif mouse.feedTimeLeft >= 500:
+	elif mouse.feedTimeLeft >= 900:
 		topguislide = -3
 		wasHunger = true
-	elif mouse.feedTimeLeft < 500 and wasHunger:
+	elif mouse.feedTimeLeft < 900 and wasHunger:
 		wasHunger = false
 		topguislide = 999
 		goDown = false
@@ -135,7 +135,7 @@ func _process(delta: float) -> void:
 	elif topguislide == -3:
 		icon.visible = false
 		goDown = true
-		time.text = "Pls wait before feeding him"
+		time.text = "Slow down with the food..."
 	elif topguislide == 0:
 		var format_string = "Time alive: %s:%s:%s"
 		time.text = format_string%["%02d" % hours, "%02d" % minutes,"%02d" % seconds]

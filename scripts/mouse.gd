@@ -62,7 +62,6 @@ func chooseEvent():
 	var theChoice = randi_range(1,10)
 	if theChoice <= 8: #80% for a random event
 		consecutiveEvents += 1
-		print("amonation")
 		if theChoice in [0,1,2,3]: #40% for walk
 			currentAnim = "walk"
 			walkto(randi_range(65, 447),randi_range(310, 448))
@@ -93,7 +92,6 @@ func _on_event_timeout() -> void:
 			mouseSprite.play("sleep")
 
 func _on_sprite_animation_finished() -> void:
-	print("stop moving")
 	returnToIdle()
 	
 func _input(event):
@@ -137,7 +135,7 @@ func _process(delta: float) -> void:
 		returnToIdle()
 		eventTimer.start()
 		
-	if (feedTimeLeft <= -10 or feedTimeLeft >= 600) and not dead:
+	if (feedTimeLeft <= -10 or feedTimeLeft >= 1000) and not dead:
 		isWalking = false
 		dead = true
 		eventTimer.stop()
