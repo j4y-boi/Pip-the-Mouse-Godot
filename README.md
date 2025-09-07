@@ -2,3 +2,6 @@
 
 # Pip the Mouse 2
 Pip the Mouse 2 is a port of the original [Pip the Mouse](https://github.com/j4y-boi/pip-the-mouse) that was created for Hackapet.
+
+## How to play
+Head to [https://j4y-boi.itch.io/pip-the-mouse-2](https://j4y-boi.itch.io/pip-the-mouse-2) or build it yourself with Godot. (Do note that logo's may not be included.
