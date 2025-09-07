@@ -17,6 +17,8 @@ var contents_to_save: Dictionary = {
 	"mousey" = 297.0,
 	"timeAlive" = 0,
 	"autosaveTime" = 30,
+	"feedtimeleft" = 30,
+	"dead" = false,
 }
 
 var success = true
@@ -85,7 +87,9 @@ func _ready() -> void:
 		#mouse.position.y = contents_to_save.mousey
 		print("loaded mouse coords at ("+str(contents_to_save.mousex)+","+str(contents_to_save.mousey)+")")
 		
+		autosave.stop()
 		autosave.wait_time = contents_to_save.autosaveTime
+		autosave.start()
 		print("set autosave pref to: "+str(contents_to_save.autosaveTime))
 		
 		print(contents_to_save)
@@ -95,8 +99,8 @@ func _ready() -> void:
 
 func _on_wait_until_save_timeout() -> void:
 	saveData()
-	print("thnaku have nice day :)")
+	print("saved")
 
 func _on_autosave_timeout() -> void:
-	print("IM CURRENTLY IN THE PROCESS OF WAITING UNTIL ALL YOUR VARIABLES ARE DONE SETTING >:(")
+	print("waiting til everything is set")
 	wait_until_save.start()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://fkkjrgm2pbhn"]
+[gd_scene load_steps=19 format=3 uid="uid://fkkjrgm2pbhn"]
 
 [ext_resource type="Script" uid="uid://buqaipatv1lkm" path="res://scripts/parallax_background.gd" id="1_13sgg"]
 [ext_resource type="Texture2D" uid="uid://b8vgj0dabgab2" path="res://assets/bg/sky.png" id="2_i6lef"]
@@ -9,6 +9,24 @@
 [ext_resource type="Texture2D" uid="uid://dp8csrh220xeo" path="res://exports/logo, art n stuff/itchiobanner.png" id="7_i42df"]
 [ext_resource type="FontFile" uid="uid://btqyhp5s88ei2" path="res://assets/fonts/Delius-Regular.ttf" id="8_7jp70"]
 [ext_resource type="Script" uid="uid://b345ghsdtk365" path="res://scripts/startLogo.gd" id="8_i6lef"]
+[ext_resource type="Script" uid="uid://bu0fyhfdmo5yw" path="res://scripts/buttons.gd" id="9_70i5f"]
+[ext_resource type="PackedScene" uid="uid://bbn8hg7verlsy" path="res://scenes/game.tscn" id="10_mj5lg"]
+[ext_resource type="AudioStream" uid="uid://d3t63m1qvixkv" path="res://assets/audio/sfx/back.wav" id="12_i42df"]
+[ext_resource type="AudioStream" uid="uid://02eg8op8sim0" path="res://assets/audio/sfx/confirm.wav" id="13_7jp70"]
+[ext_resource type="AudioStream" uid="uid://uopaey8ag42b" path="res://assets/audio/sfx/hover.wav" id="14_mxgkd"]
+[ext_resource type="AudioStream" uid="uid://ubtujg2xu02n" path="res://assets/audio/music/music1.mp3" id="15_7jp70"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_7jp70"]
+color = Color(1, 1, 1, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_mxgkd"]
+color = Color(0.19921, 0.428185, 1, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_g6gyw"]
+color = Color(0.405815, 0.592137, 1, 1)
+thickness = 6
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -59,40 +77,177 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("7_i42df")
 script = ExtResource("8_i6lef")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="button" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -66.0
+offset_left = -107.0
 offset_top = -294.0
-offset_right = 66.0
+offset_right = 107.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("9_70i5f")
+playScene = ExtResource("10_mj5lg")
 
-[node name="start" type="Button" parent="VBoxContainer"]
+[node name="start" type="Button" parent="button"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("8_7jp70")
 theme_override_font_sizes/font_size = 40
 text = "Start Game
 "
 
-[node name="settings" type="Button" parent="VBoxContainer"]
+[node name="settings" type="Button" parent="button"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("8_7jp70")
 theme_override_font_sizes/font_size = 40
 text = "Options"
 
-[node name="quit" type="Button" parent="VBoxContainer"]
+[node name="quit" type="Button" parent="button"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("8_7jp70")
 theme_override_font_sizes/font_size = 40
 text = "Exit"
 
+[node name="Settings" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -76.0
+offset_right = 150.0
+offset_bottom = 224.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="title" type="Label" parent="Settings"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_right = 256.0
+offset_bottom = 100.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 60
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Settings"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.0
+offset_top = -40.0
+offset_right = 126.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "this'll do something later i swear"
+
+[node name="Label2" type="Label" parent="Settings"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.0
+offset_top = 27.0
+offset_right = 126.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.0374824
+text = "todo: add functionality (lmao)"
+
+[node name="HSlider" type="HSlider" parent="Settings"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -10.0
+offset_right = 130.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_7jp70")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_mxgkd")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_g6gyw")
+value = 50.0
+
+[node name="back" type="Button" parent="Settings"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -49.0
+offset_top = -70.0
+offset_right = 49.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "created by j4y_boi (duh)"
+offset_left = -31.0
+offset_top = 478.0
+offset_right = 230.0
+offset_bottom = 520.0
+theme_override_font_sizes/font_size = 20
+text = "created by j4y_boi"
+horizontal_alignment = 1
+
+[node name="fg" type="ColorRect" parent="."]
+visible = false
+z_index = 20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="back" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_i42df")
+bus = &"SFX"
+
+[node name="confirm" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_7jp70")
+bus = &"SFX"
+
+[node name="hover" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_mxgkd")
+bus = &"SFX"
+
+[node name="bgm" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_7jp70")
+autoplay = true
+bus = &"Music"
+
+[connection signal="pressed" from="button/start" to="button" method="_on_start_pressed"]
+[connection signal="pressed" from="button/settings" to="button" method="_on_settings_pressed"]
+[connection signal="pressed" from="button/quit" to="button" method="_on_quit_pressed"]
+[connection signal="pressed" from="Settings/back" to="button" method="_on_back_pressed"]

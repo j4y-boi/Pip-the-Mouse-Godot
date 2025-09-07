@@ -23,7 +23,7 @@
 [ext_resource type="Script" uid="uid://ff3du54xkfiy" path="res://scripts/foodZ.gd" id="18_bt5mj"]
 [ext_resource type="Texture2D" uid="uid://b1sdcim1hdl0f" path="res://assets/gui/heart.png" id="20_5newe"]
 [ext_resource type="Texture2D" uid="uid://c4ito5r2grbr8" path="res://assets/gui/arrow.png" id="21_e1j6l"]
-[ext_resource type="AudioStream" uid="uid://dq45eo48vy6tf" path="res://assets/audio/music/game2.ogg" id="24_e1j6l"]
+[ext_resource type="AudioStream" uid="uid://b607vnfgaaqnx" path="res://assets/audio/music/game1.mp3" id="23_bt5mj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
 atlas = ExtResource("10_ca42v")
@@ -334,11 +334,10 @@ wait_time = 10.0
 one_shot = true
 
 [node name="sprite" type="AnimatedSprite2D" parent="mouse"]
-scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_bj30b")
-animation = &"idle"
+animation = &"ball"
 autoplay = "idle"
-frame_progress = 0.155017
+frame_progress = 0.206531
 
 [node name="foodAuthority" type="Node2D" parent="."]
 script = ExtResource("16_5newe")
@@ -389,7 +388,7 @@ scale = Vector2(0.6, 0.6)
 texture = ExtResource("20_5newe")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("24_e1j6l")
+stream = ExtResource("23_bt5mj")
 autoplay = true
 bus = &"Music"
 

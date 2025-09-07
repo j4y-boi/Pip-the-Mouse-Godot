@@ -2,7 +2,7 @@ extends Sprite2D
 @onready var logo: Sprite2D = $"."
 
 var start = -95
-var end = 120
+var end = 100
 var time = 0.0
 
 func _ready() -> void:

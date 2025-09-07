@@ -3,6 +3,16 @@ extends Node2D
 @onready var mouseSprite: AnimatedSprite2D = $sprite
 @onready var eventTimer: Timer = $event
 @onready var save: Node = %Save
+@onready var food_authority: Node2D = $"../foodAuthority"
+
+signal ateFood(food:String)
+
+#some config
+var eventsBeforeSleep = 5
+var nutritionalValue = 20
+#
+
+var feedTimeLeft = 0.0
 
 var aliveTime = 0.0
 var consecutiveEvents = 0
@@ -10,12 +20,17 @@ var currentAnim = "idle"
 
 var isWalking = false
 var target = Vector2(0,0)
-var speed = 50.0
+var speed = 100.0
+
+var currentFood:String
+var dead = false
 
 func _ready() -> void:
 	mouse.position.x = save.contents_to_save.mousex
 	mouse.position.y = save.contents_to_save.mousey
 	aliveTime = float(save.contents_to_save.timeAlive)
+	feedTimeLeft = float(save.contents_to_save.feedtimeleft)
+	dead = save.contents_to_save.dead
 	mouseSprite.position = Vector2(0,0)
 	eventTimer.start()
 
@@ -56,16 +71,18 @@ func _on_autosave_timeout() -> void:
 	save.contents_to_save.mousex = mouse.position.x
 	save.contents_to_save.mousey = mouse.position.y
 	save.contents_to_save.timeAlive = int(aliveTime)
+	save.contents_to_save.feedtimeleft = int(feedTimeLeft)
 
 func _on_event_timeout() -> void:
-	if not consecutiveEvents >= 2:
+	if not consecutiveEvents >= eventsBeforeSleep:
 		eventTimer.wait_time = randi_range(5,10)
 		chooseEvent()
 		eventTimer.start()
 	else:
-		consecutiveEvents = 0
-		currentAnim = "sleep"
-		mouseSprite.play("sleep")
+		if not dead:
+			consecutiveEvents = 0
+			currentAnim = "sleep"
+			mouseSprite.play("sleep")
 
 func _on_sprite_animation_finished() -> void:
 	print("stop moving")
@@ -78,6 +95,7 @@ func _input(event):
 
 func _process(delta: float) -> void:
 	aliveTime += delta # i dunno if there are better way to do this
+	feedTimeLeft -= delta
 	
 	# just writing this here so i dont forget
 	if isWalking: #check if mous is wandering
@@ -94,3 +112,28 @@ func _process(delta: float) -> void:
 	mouse.position.x = clamp(mouse.position.x, 65, 447) #holy shit this is way better
 	mouse.position.y = clamp(mouse.position.y, 310, 448)
 	
+	mouse.z_index = mouse.position.y #i dunno how effective thisll be, but this is how i do it so screw you
+	
+	var keys = food_authority.foods.keys()
+	if not keys.is_empty() and currentAnim == "idle" and currentFood == "": #if there is food and he aint doin anything
+		print("start walk")
+		var first_key = keys[0]
+		var pos = food_authority.foods[first_key]
+		walkto(pos.x,pos.y)
+		currentFood = first_key
+		eventTimer.stop()
+	if not isWalking and currentFood != "": 
+		print("reached food")
+		emit_signal("ateFood", currentFood)
+		feedTimeLeft += nutritionalValue
+		currentFood = ""
+		returnToIdle()
+		eventTimer.start()
+		
+	if feedTimeLeft <= -10 or dead:
+		isWalking = false
+		dead = true
+		eventTimer.stop()
+		returnToIdle()
+		mouseSprite.play("dead")
+		currentAnim = "dead"
