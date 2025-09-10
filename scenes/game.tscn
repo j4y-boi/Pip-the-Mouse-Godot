@@ -344,7 +344,7 @@ scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_bj30b")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.230781
+frame_progress = 0.892989
 
 [node name="foodAuthority" type="Node2D" parent="."]
 script = ExtResource("16_5newe")

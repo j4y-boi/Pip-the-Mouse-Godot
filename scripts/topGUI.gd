@@ -107,7 +107,7 @@ func _process(delta: float) -> void:
 		if intgametime == lasttime+5 and talkstage == 1:
 			talkstage+=1
 			if doesreturn:
-				random_sentence(["Why'd you reload?","Did you reload?","Restarted the game, huh?"])
+				random_sentence(["Why'd you reload?","Did you reload the game?","Restarted the game, huh?"])
 			elif mouse.feedTimeLeft <= 0:
 				random_sentence(["He starved...","He ate too little...","Did you give him food?"])
 			elif mouse.feedTimeLeft >= 600:

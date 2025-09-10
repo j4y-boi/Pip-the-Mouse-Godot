@@ -51,3 +51,7 @@ func _on_start_pressed() -> void:
 func _on_back_pressed() -> void:
 	defaultButtons.visible = true
 	settingsMenu.visible = false
+
+#func _on_label_gui_input(event: InputEvent) -> void:
+	#if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+		#OS.shell_open("https://j4y-boi.itch.io/")

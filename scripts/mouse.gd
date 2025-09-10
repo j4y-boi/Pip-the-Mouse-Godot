@@ -132,8 +132,9 @@ func _process(delta: float) -> void:
 		emit_signal("ateFood", currentFood)
 		feedTimeLeft += nutritionalValue
 		currentFood = ""
-		returnToIdle()
-		eventTimer.start()
+		if len(food_authority.foods) == 0:
+			returnToIdle()
+			eventTimer.start()
 		
 	if (feedTimeLeft <= -10 or feedTimeLeft >= 1000) and not dead:
 		isWalking = false

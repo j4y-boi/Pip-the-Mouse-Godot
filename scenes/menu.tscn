@@ -249,3 +249,4 @@ bus = &"Music"
 [connection signal="pressed" from="button/settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="button/quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Settings/back" to="." method="_on_back_pressed"]
+[connection signal="gui_input" from="Label" to="." method="_on_label_gui_input"]
