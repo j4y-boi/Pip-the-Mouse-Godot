@@ -14,12 +14,13 @@ var contents_to_save: Dictionary = {
 	"version" = 5,
 	"roomnum" = 1,
 	"artnum" = 1,
-	"mousex" = 91.0,
-	"mousey" = 310.0,
+	"mousex" = randi_range(65, 447),
+	"mousey" = randi_range(310, 430),
 	"timeAlive" = 0,
 	"autosaveTime" = 30,
 	"feedtimeleft" = 30,
 	"dead" = false,
+	"leftbehind" = false,
 }
 
 var judgement: Dictionary = {

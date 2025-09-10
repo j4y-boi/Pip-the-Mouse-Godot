@@ -1,17 +1,33 @@
-extends VBoxContainer
+extends Control
 
 @export var playScene : PackedScene
-@onready var fg: ColorRect = $"../fg"
-@onready var settingsMenu: Panel = $"../Settings"
-@onready var defaultButtons: VBoxContainer = $"."
+@onready var fg: ColorRect = $fg
+@onready var settingsMenu: Panel = $Settings
+@onready var defaultButtons: VBoxContainer = $button
+@onready var logo: Sprite2D = $Itchiobanner
+
+var start = -95
+var end = 100
+var time = 0.0
 
 func _ready() -> void:
 	fg.modulate.a = 0.0
 	fg.visible = false
+	logo.position.y = start
+
+func _process(delta: float) -> void:
+	time += delta
+	
+	logo.rotation = (sin(time))/10
+	
+	if int(logo.position.y) > end-3:
+		logo.position.y = end
+	else:
+		logo.position.y += (end-logo.position.y)*delta*2
 
 func _on_quit_pressed() -> void:
 	fg.visible = true
-	$"../back".play()
+	$back.play()
 	var tween = self.create_tween()
 	tween.tween_property(fg, "modulate:a", 1.0, 0.5)
 	tween.tween_interval(.5)
@@ -24,11 +40,12 @@ func _on_settings_pressed() -> void:
 
 func _on_start_pressed() -> void:
 	fg.visible = true
-	$"../confirm".play()
+	$confirm.play()
 	var tween = self.create_tween()
 	tween.tween_property(fg, "modulate:a", 1.0, 1)
 	tween.tween_interval(.5)
 	await tween.finished
+	await get_tree().process_frame
 	get_tree().change_scene_to_packed(playScene)
 
 func _on_back_pressed() -> void:

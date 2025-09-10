@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://bbn8hg7verlsy"]
+[gd_scene load_steps=60 format=3 uid="uid://bbn8hg7verlsy"]
 
 [ext_resource type="Script" uid="uid://bduil1pf3acyu" path="res://scripts/savesystem.gd" id="1_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="1_p57ef"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://ff3du54xkfiy" path="res://scripts/foodZ.gd" id="18_bt5mj"]
 [ext_resource type="Texture2D" uid="uid://b1sdcim1hdl0f" path="res://assets/gui/heart.png" id="20_5newe"]
 [ext_resource type="Texture2D" uid="uid://c4ito5r2grbr8" path="res://assets/gui/arrow.png" id="21_e1j6l"]
+[ext_resource type="Script" uid="uid://du3dhitq1xgi3" path="res://scripts/guibutton.gd" id="22_qnb83"]
 [ext_resource type="AudioStream" uid="uid://dq45eo48vy6tf" path="res://assets/audio/music/game2.ogg" id="24_e1j6l"]
 [ext_resource type="Script" uid="uid://cb1lkn50aewqc" path="res://scripts/bgm.gd" id="25_bhx41"]
 [ext_resource type="AudioStream" uid="uid://b607vnfgaaqnx" path="res://assets/audio/music/game1.mp3" id="26_qnb83"]
@@ -55,27 +56,27 @@ region = Rect2(64, 0, 32, 32)
 atlas = ExtResource("7_kvuet")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f1ej7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sww3w"]
 atlas = ExtResource("8_trtic")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oprun"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_suyxu"]
 atlas = ExtResource("8_trtic")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sgl2t"]
 atlas = ExtResource("8_trtic")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qfm1y"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qouja"]
 atlas = ExtResource("8_trtic")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fulsm"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wljb1"]
 atlas = ExtResource("8_trtic")
 region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4r5pv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2yb1"]
 atlas = ExtResource("8_trtic")
 region = Rect2(160, 0, 32, 32)
 
@@ -182,22 +183,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f1ej7")
+"texture": SubResource("AtlasTexture_sww3w")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oprun")
+"texture": SubResource("AtlasTexture_suyxu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a8ls1")
+"texture": SubResource("AtlasTexture_sgl2t")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qfm1y")
+"texture": SubResource("AtlasTexture_qouja")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fulsm")
+"texture": SubResource("AtlasTexture_wljb1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4r5pv")
+"texture": SubResource("AtlasTexture_v2yb1")
 }],
 "loop": true,
 "name": &"idle",
@@ -278,6 +279,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_js0lu"]
+size = Vector2(33.3333, 13.3333)
+
 [node name="game" type="Node2D"]
 
 [node name="Save" type="Node" parent="."]
@@ -340,7 +344,7 @@ scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_bj30b")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.155017
+frame_progress = 0.530859
 
 [node name="foodAuthority" type="Node2D" parent="."]
 script = ExtResource("16_5newe")
@@ -375,6 +379,13 @@ position = Vector2(0, 74.5)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("21_e1j6l")
 
+[node name="Area2D" type="Area2D" parent="Control/Panel/arrow"]
+script = ExtResource("22_qnb83")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Panel/arrow/Area2D"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_js0lu")
+
 [node name="Label" type="Label" parent="Control/Panel"]
 offset_left = -61.0
 offset_top = 36.0
@@ -401,3 +412,4 @@ playlist = Array[AudioStream]([ExtResource("24_e1j6l"), ExtResource("26_qnb83")]
 [connection signal="ateFood" from="mouse" to="foodAuthority" method="_on_mouse_ate_food"]
 [connection signal="timeout" from="mouse/event" to="mouse" method="_on_event_timeout"]
 [connection signal="animation_finished" from="mouse/sprite" to="mouse" method="_on_sprite_animation_finished"]
+[connection signal="finished" from="bgm" to="bgm" method="_on_finished"]

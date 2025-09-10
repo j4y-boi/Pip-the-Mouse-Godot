@@ -9,7 +9,7 @@ signal ateFood(food:String)
 
 #some config
 var eventsBeforeSleep = 5
-var nutritionalValue = 20
+var nutritionalValue = 10
 #
 
 var feedTimeLeft = 0.0
@@ -117,7 +117,7 @@ func _process(delta: float) -> void:
 			mouse.position += to_target.normalized() * step # w a l c
 	
 	mouse.position.x = clamp(mouse.position.x, 65, 447) #holy shit this is way better
-	mouse.position.y = clamp(mouse.position.y, 310, 448)
+	mouse.position.y = clamp(mouse.position.y, 310, 447)
 	
 	mouse.z_index = mouse.position.y #i dunno how effective thisll be, but this is how i do it so screw you
 	

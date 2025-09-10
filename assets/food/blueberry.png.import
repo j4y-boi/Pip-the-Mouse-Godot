@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmkxhkhg4a0pj"
-path="res://.godot/imported/grapes.bmp-5451e749d48ce0882999bb76eb043128.ctex"
+uid="uid://8ud8owrtuse4"
+path="res://.godot/imported/blueberry.png-a1cb32b4b811031116689268ab759b50.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/food/grapes.bmp"
-dest_files=["res://.godot/imported/grapes.bmp-5451e749d48ce0882999bb76eb043128.ctex"]
+source_file="res://assets/food/blueberry.png"
+dest_files=["res://.godot/imported/blueberry.png-a1cb32b4b811031116689268ab759b50.ctex"]
 
 [params]
 

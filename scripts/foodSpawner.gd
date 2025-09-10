@@ -8,11 +8,12 @@ var amountSpawned = 0
 var spawnLimit = 10
 var foods = {}
 
-const foodTextures = [
+var foodTextures = [
 	"res://assets/food/apple_slice.bmp",
 	"res://assets/food/cheese.bmp",
-	"res://assets/food/grapes.bmp",
-	"res://assets/food/peanut.bmp"
+	"res://assets/food/peanut.bmp",
+	"res://assets/food/sunflowerseed.png",
+	"res://assets/food/blueberry.png",
 ]
 
 func _input(event):
@@ -21,7 +22,7 @@ func _input(event):
 			amountSpawned += 1
 			var buffer = food_copy.duplicate() #WHAT THE HELL IS THIS FOR THEN IF I NEED TO ADD IT ANYWAY
 			buffer.position.x = randi_range(65, 447)
-			buffer.position.y = randi_range(342, 448) #note to self: do NOT ever change this outside of pip's range, he'll fuckin' die and keep walking 
+			buffer.position.y = randi_range(342, 446) #note to self: do NOT ever change this outside of pip's range, he'll fuckin' die and keep walking 
 			buffer.set_script(load("res://scripts/foodZ.gd")) #see? im nice with resources, i only add the script after its cloned :)
 			buffer.visible = true
 			buffer.name = "food"+str(amountSpawned)

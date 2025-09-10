@@ -28,6 +28,7 @@ func fade():
 		tween.tween_property(screen, "modulate:a", 0.0, fade_out_time)
 		tween.tween_interval(out_time)
 		await tween.finished
+	await get_tree().process_frame
 	get_tree().change_scene_to_packed(load_scene)
 	
 func _unhandled_input(event: InputEvent):
@@ -37,6 +38,7 @@ func _unhandled_input(event: InputEvent):
 		tween.tween_property(fg, "modulate:a", 1.0, 0.25)
 		tween.tween_interval(out_time)
 		await tween.finished
+		await get_tree().process_frame
 		get_tree().change_scene_to_packed(load_scene)
 	
 func _ready():

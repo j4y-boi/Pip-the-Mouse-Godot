@@ -14,13 +14,7 @@ var end = -132
 
 var slidelimit = 2
 
-const foodTextures = [
-	"res://assets/food/apple_slice.bmp",
-	"res://assets/food/cheese.bmp",
-	"res://assets/food/grapes.bmp",
-	"res://assets/food/peanut.bmp"
-]
-
+var foodTextures:Array
 var textured = load("res://assets/gui/heart.png")
 
 var topguislide = 0
@@ -29,20 +23,23 @@ var start2 = 74.5
 var end2 = 64.5
 # -
 
-var uhhhh = 0.0
+var gametime = 0.0
 var lasttime = 0
 var options = []
 var canreturn = false
-var hmmmm = 0
+var intgametime = 0
 var talkstage = 0
 var wasHunger = false
 
+func random_sentence(lines: Array) -> void:
+	time.text = lines[randi_range(0, lines.size() - 1)]
+	
 func _ready() -> void:
-	pass # Replace with function body.
-
+	foodTextures = food_authority.foodTextures
+	
 func _process(delta: float) -> void:
-	uhhhh += delta
-	hmmmm = floor(uhhhh)
+	gametime += delta
+	intgametime = floor(gametime)
 	
 	if mouse.dead:
 		topguislide = -1
@@ -93,40 +90,36 @@ func _process(delta: float) -> void:
 		icon.visible = false
 		goDown = true
 		if lasttime == 0:
-			lasttime = hmmmm
+			lasttime = intgametime
 		
-		if talkstage == 0 and talkstage == 0:
+		if intgametime == 0 and talkstage == 0:
 			talkstage += 1
 			if mouse.feedTimeLeft <= 0 or mouse.feedTimeLeft >= 600:
-				options = ["P-Pip? You there?","Is he okay?","Is he... Dead?"]
+				random_sentence(["P-Pip? You there?","Is he okay?","Is he... Dead?"])
 			else:
-				options = ["Huh...", "That's weird.", "Wait what?"]
-			time.text = options[randi_range(0,len(options)-1)]
-		if hmmmm == lasttime+5 and talkstage == 1:
+				random_sentence(["Huh...", "That's weird.", "Wait what?"])
+		if intgametime == lasttime+5 and talkstage == 1:
 			talkstage+=1
 			if mouse.feedTimeLeft <= 0:
-				options = ["He starved...","He ate too little...","Did you give him food?"]
+				random_sentence(["He starved...","He ate too little...","Did you give him food?"])
 			elif mouse.feedTimeLeft >= 600:
-				options = ["That's too much food...","You fed him too much...","A bit too much food."]
+				random_sentence(["That's too much food...","You fed him too much...","A bit too much food..."])
 			else:
-				options = ["This death wasn't..."]
-			time.text = options[randi_range(0,len(options)-1)]
-		if hmmmm == lasttime+10 and talkstage == 2:
+				random_sentence(["This death wasn't..."])
+		if intgametime == lasttime+10 and talkstage == 2:
 			talkstage+=1
 			if mouse.feedTimeLeft <= 0:
-				options = ["He needs to eat.","Mice eat too. Feed him.","Press [LEFT] to feed"]
+				random_sentence(["He needs to eat.","Mice eat too. Feed him.","Press [LEFT] to feed"])
 			elif mouse.feedTimeLeft >= 600:
-				options = ["Mice eat less.","Give a bit less food next time.",""]
+				random_sentence(["Mice eat less.","Don't give too much food.","Feed him less."])
 			else:
-				options = ["Recognized?"]
-			time.text = options[randi_range(0,len(options)-1)]
-		if hmmmm == lasttime+15 and talkstage == 3:
+				random_sentence(["Recognized?"])
+		if intgametime == lasttime+15 and talkstage == 3:
 			talkstage+=1
-			var format_string = "He was alive for: %s:%s:%s"
-			time.text = format_string%["%02d" % hours, "%02d" % minutes,"%02d" % seconds]
-		if hmmmm == lasttime+20 and talkstage == 4:
+			time.text = "He was alive for: %s:%s:%s"%["%02d" % hours, "%02d" % minutes,"%02d" % seconds]
+		if intgametime == lasttime+20 and talkstage == 4:
 			talkstage+=1
-			time.text = "Press [UP] to restart."
+			random_sentence(["Press [UP] to restart."])
 			canreturn = true
 	elif topguislide == -2:
 		icon.visible = false
@@ -170,8 +163,8 @@ func _input(event):
 		print("nuked")
 		#restore save, handled by savesystem at restart
 		save.judgement.miceKilled += 1
-		if mouse.aliveTime > save.longestAlive:
-			save.longestAlive = mouse.aliveTime
+		if mouse.aliveTime > save.judgement.longestAlive:
+			save.judgement.longestAlive = mouse.aliveTime
 		
 		var save_path = "user://savefile.json"
 		if FileAccess.file_exists(save_path):
