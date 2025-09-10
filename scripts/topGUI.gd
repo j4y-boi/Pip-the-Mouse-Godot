@@ -30,12 +30,14 @@ var canreturn = false
 var intgametime = 0
 var talkstage = 0
 var wasHunger = false
+var doesreturn = false
 
 func random_sentence(lines: Array) -> void:
 	time.text = lines[randi_range(0, lines.size() - 1)]
 	
 func _ready() -> void:
 	foodTextures = food_authority.foodTextures
+	doesreturn = save.contents_to_save.leftbehind
 	
 func _process(delta: float) -> void:
 	gametime += delta
@@ -92,15 +94,21 @@ func _process(delta: float) -> void:
 		if lasttime == 0:
 			lasttime = intgametime
 		
-		if intgametime == 0 and talkstage == 0:
+		if lasttime == 0  and talkstage == 0:
 			talkstage += 1
-			if mouse.feedTimeLeft <= 0 or mouse.feedTimeLeft >= 600:
+			save.contents_to_save.leftbehind = true
+			save.saveData()
+			if doesreturn:
+				random_sentence(["Uhh...","...","Hm..."])
+			elif mouse.feedTimeLeft <= 0 or mouse.feedTimeLeft >= 600:
 				random_sentence(["P-Pip? You there?","Is he okay?","Is he... Dead?"])
 			else:
 				random_sentence(["Huh...", "That's weird.", "Wait what?"])
 		if intgametime == lasttime+5 and talkstage == 1:
 			talkstage+=1
-			if mouse.feedTimeLeft <= 0:
+			if doesreturn:
+				random_sentence(["Why'd you reload?","Did you reload?","Restarted the game, huh?"])
+			elif mouse.feedTimeLeft <= 0:
 				random_sentence(["He starved...","He ate too little...","Did you give him food?"])
 			elif mouse.feedTimeLeft >= 600:
 				random_sentence(["That's too much food...","You fed him too much...","A bit too much food..."])
@@ -108,7 +116,9 @@ func _process(delta: float) -> void:
 				random_sentence(["This death wasn't..."])
 		if intgametime == lasttime+10 and talkstage == 2:
 			talkstage+=1
-			if mouse.feedTimeLeft <= 0:
+			if doesreturn:
+				random_sentence(["He's still dead.","That didn't help.","Didn't change anything."])
+			elif mouse.feedTimeLeft <= 0:
 				random_sentence(["He needs to eat.","Mice eat too. Feed him.","Press [LEFT] to feed"])
 			elif mouse.feedTimeLeft >= 600:
 				random_sentence(["Mice eat less.","Don't give too much food.","Feed him less."])
@@ -165,6 +175,7 @@ func _input(event):
 		save.judgement.miceKilled += 1
 		if mouse.aliveTime > save.judgement.longestAlive:
 			save.judgement.longestAlive = mouse.aliveTime
+			save.saveData()
 		
 		var save_path = "user://savefile.json"
 		if FileAccess.file_exists(save_path):
