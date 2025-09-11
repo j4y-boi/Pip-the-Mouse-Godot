@@ -95,7 +95,7 @@ func _ready() -> void:
 		contents_to_save.artnum = ranart
 		
 		saveData()
-		print("generated room+saved")
+		print("generated save file")
 	else:
 		print("loaded a found save file running version "+str(contents_to_save.version))
 		
@@ -115,15 +115,13 @@ func _ready() -> void:
 		autosave.start()
 		print("set autosave pref to: "+str(contents_to_save.autosaveTime))
 		
-		print(contents_to_save)
-		
 		saveData()
 		
 
 func _on_wait_until_save_timeout() -> void:
 	saveData()
-	print("saved")
+	print("Saved")
 
 func _on_autosave_timeout() -> void:
-	print("waiting til everything is set")
+	print("Waiting...")
 	wait_until_save.start()

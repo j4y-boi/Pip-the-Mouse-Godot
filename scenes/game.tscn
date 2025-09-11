@@ -16,8 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://c2akrqa0o6yec" path="res://assets/pip/walk2_mouse.bmp" id="12_ssvqc"]
 [ext_resource type="Texture2D" uid="uid://c682iw7738y74" path="res://assets/pip/look.png" id="13_ir15t"]
 [ext_resource type="Script" uid="uid://b0yg3pgbfv1q6" path="res://scripts/foodSpawner.gd" id="16_5newe"]
-[ext_resource type="Texture2D" uid="uid://cae0fcy5m3h3s" path="res://assets/food/apple_slice.bmp" id="16_ca42v"]
 [ext_resource type="Texture2D" uid="uid://uscnwqras3le" path="res://assets/gui/panel.png" id="17_1kice"]
+[ext_resource type="Texture2D" uid="uid://btn2g4c20qdej" path="res://assets/food/apple_slice.png" id="17_qnb83"]
 [ext_resource type="FontFile" uid="uid://btqyhp5s88ei2" path="res://assets/fonts/Delius-Regular.ttf" id="17_ssvqc"]
 [ext_resource type="Script" uid="uid://dl6unu3a38hgi" path="res://scripts/topGUI.gd" id="18_37s47"]
 [ext_resource type="Script" uid="uid://ff3du54xkfiy" path="res://scripts/foodZ.gd" id="18_bt5mj"]
@@ -352,10 +352,10 @@ script = ExtResource("16_5newe")
 [node name="foodCopy" type="Sprite2D" parent="foodAuthority"]
 visible = false
 z_index = 5
-position = Vector2(328, 342)
+position = Vector2(328, 400)
 scale = Vector2(3, 3)
 skew = 0.0314159
-texture = ExtResource("16_ca42v")
+texture = ExtResource("17_qnb83")
 script = ExtResource("18_bt5mj")
 
 [node name="Control" type="Control" parent="."]

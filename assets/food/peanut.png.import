@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brupot2r6tjsu"
-path="res://.godot/imported/blueberry.png-a1cb32b4b811031116689268ab759b50.ctex"
+uid="uid://cujwdovl64cpl"
+path="res://.godot/imported/peanut.png-5849121b70d14bf03400ab230b88c0cb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/food/blueberry.png"
-dest_files=["res://.godot/imported/blueberry.png-a1cb32b4b811031116689268ab759b50.ctex"]
+source_file="res://assets/food/peanut.png"
+dest_files=["res://.godot/imported/peanut.png-5849121b70d14bf03400ab230b88c0cb.ctex"]
 
 [params]
 

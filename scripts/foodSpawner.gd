@@ -9,9 +9,9 @@ var spawnLimit = 10
 var foods = {}
 
 var foodTextures = [
-	"res://assets/food/apple_slice.bmp",
-	"res://assets/food/cheese.bmp",
-	"res://assets/food/peanut.bmp",
+	"res://assets/food/apple_slice.png",
+	"res://assets/food/cheese.png",
+	"res://assets/food/peanut.png",
 	"res://assets/food/sunflowerseed.png",
 	"res://assets/food/blueberry.png",
 ]

@@ -119,6 +119,7 @@ func _process(delta: float) -> void:
 	mouse.position.x = clamp(mouse.position.x, 65, 447) #holy shit this is way better
 	mouse.position.y = clamp(mouse.position.y, 310, 447)
 	
+	@warning_ignore("narrowing_conversion")
 	mouse.z_index = mouse.position.y #i dunno how effective thisll be, but this is how i do it so screw you
 	
 	var keys = food_authority.foods.keys()

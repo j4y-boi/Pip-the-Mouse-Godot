@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cae0fcy5m3h3s"
-path="res://.godot/imported/apple_slice.bmp-5aaacecc4a9bb59def8e56ec78991979.ctex"
+uid="uid://btn2g4c20qdej"
+path="res://.godot/imported/apple_slice.png-477aed4cd2c0629f1e7a9bcfd83493e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/food/apple_slice.bmp"
-dest_files=["res://.godot/imported/apple_slice.bmp-5aaacecc4a9bb59def8e56ec78991979.ctex"]
+source_file="res://assets/food/apple_slice.png"
+dest_files=["res://.godot/imported/apple_slice.png-477aed4cd2c0629f1e7a9bcfd83493e8.ctex"]
 
 [params]
 
