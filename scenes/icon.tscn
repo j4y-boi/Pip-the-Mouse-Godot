@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dv75sskm1losc"]
+
+[ext_resource type="Texture2D" uid="uid://dr6dt5dwmkha3" path="res://assets/food/cheese.png" id="1_h6rt1"]
+[ext_resource type="Script" uid="uid://brwhxw7xdmdp2" path="res://scripts/icon.gd" id="2_ojcb0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ojcb0"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dybq"]
+size = Vector2(42, 48)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_q2gxc"]
+
+[node name="icon" type="Node2D"]
+
+[node name="chez" type="RigidBody2D" parent="."]
+position = Vector2(0, 1)
+physics_material_override = SubResource("PhysicsMaterial_ojcb0")
+
+[node name="cheese" type="Sprite2D" parent="chez"]
+position = Vector2(-1, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("1_h6rt1")
+script = ExtResource("2_ojcb0")
+
+[node name="hitbox" type="CollisionShape2D" parent="chez"]
+position = Vector2(-2, 1)
+shape = SubResource("RectangleShape2D_3dybq")
+
+[node name="bottom" type="StaticBody2D" parent="."]
+position = Vector2(0, 60)
+
+[node name="line" type="CollisionShape2D" parent="bottom"]
+shape = SubResource("WorldBoundaryShape2D_q2gxc")

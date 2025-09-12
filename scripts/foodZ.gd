@@ -13,4 +13,4 @@ extends Sprite2D
 
 func _process(_delta) -> void:
 	@warning_ignore("narrowing_conversion")
-	z_index = position.y - 3
+	z_index = position.y - 1
