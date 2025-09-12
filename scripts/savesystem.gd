@@ -5,7 +5,6 @@ extends Node
 @onready var mouse: Node2D = $"../mouse"
 @onready var autosave: Timer = $Autosave
 @onready var wait_until_save: Timer = $WaitUntilSave
-@onready var icon: Node2D = $"../icon"
 
 const encrypt = true
 
@@ -52,7 +51,6 @@ func saveData():
 	file2.close()
 
 func loadData():
-	success = false
 	if FileAccess.file_exists(save_location):
 		var file
 		var file2
@@ -123,9 +121,7 @@ func _ready() -> void:
 func _on_wait_until_save_timeout() -> void:
 	saveData()
 	print("Saved")
-	icon.visible = false
 
 func _on_autosave_timeout() -> void:
 	print("Waiting...")
 	wait_until_save.start()
-	icon.visible = true

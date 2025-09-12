@@ -6,10 +6,6 @@ extends Sprite2D
 @onready var arrow: Sprite2D = $arrow
 @onready var food_authority: Node2D = $"../../foodAuthority"
 @onready var save: Node = %Save
-@onready var save_timer: Timer = $"../../Save/Autosave"
-@onready var wait_until_save: Timer = $"../../Save/WaitUntilSave"
-@onready var fade: ColorRect = $"../../fadeout/Control2/ColorRect"
-@export var playScene : PackedScene
 
 #main gui bg vars
 var goDown = false
@@ -35,21 +31,6 @@ var intgametime = 0
 var talkstage = 0
 var wasHunger = false
 var doesreturn = false
-var is_exiting := false
-
-func actual_save():
-	save_timer.stop()
-	save_timer.emit_signal("timeout")
-	await wait_until_save.timeout
-	
-func return_to_main():
-	fade.visible = true
-	var tween = self.create_tween()
-	tween.tween_property(fade, "modulate:a", 1.0, 1)
-	tween.tween_interval(.5)
-	await tween.finished
-	await get_tree().process_frame
-	get_tree().change_scene_to_packed(playScene)
 
 func random_sentence(lines: Array) -> void:
 	time.text = lines[randi_range(0, lines.size() - 1)]
@@ -57,14 +38,6 @@ func random_sentence(lines: Array) -> void:
 func _ready() -> void:
 	foodTextures = food_authority.foodTextures
 	doesreturn = save.contents_to_save.leftbehind
-	fade.visible = false
-	fade.color = Color.BLACK
-	fade.modulate.a = 0.0
-	for child in $"../../fadeout".get_children(): # im sorry, i generated these three line with ai
-		if child is Control:
-			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-
 	
 func _process(delta: float) -> void:
 	gametime += delta
@@ -196,18 +169,13 @@ func _input(event):
 			textured = load("res://assets/gui/heart.png")
 		goDown = !goDown
 	
-	if event.is_action_pressed("escape") and not is_exiting:
-		is_exiting = true
-		await actual_save()
-		await return_to_main()
-	
 	if event.is_action_pressed("up") and canreturn: #IMPORTANT, OTHERWISE THEY MIGHT DELETE THEIR OWN SAVE
 		print("nuked")
 		#restore save, handled by savesystem at restart
 		save.judgement.miceKilled += 1
 		if mouse.aliveTime > save.judgement.longestAlive:
 			save.judgement.longestAlive = mouse.aliveTime
-			actual_save()
+			save.saveData()
 		
 		var save_path = "user://savefile.json"
 		if FileAccess.file_exists(save_path):
