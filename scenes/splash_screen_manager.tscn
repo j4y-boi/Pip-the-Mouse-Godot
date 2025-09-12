@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dh1mojvgpsxv7" path="res://scripts/splash_screen_manager.gd" id="1_kkrr7"]
 [ext_resource type="Texture2D" uid="uid://bh8s2fjt82vw8" path="res://assets/pfp_ circle.png" id="1_pspwt"]
-[ext_resource type="PackedScene" uid="uid://fkkjrgm2pbhn" path="res://scenes/menu.tscn" id="2_dpkmb"]
+[ext_resource type="PackedScene" uid="uid://6wlkreru4sn4" path="res://scenes/infos.tscn" id="2_dpkmb"]
 [ext_resource type="Texture2D" uid="uid://cmsvl8eiu8bw3" path="res://assets/godot.png" id="5_f3wds"]
 
 [node name="control" type="Control" node_paths=PackedStringArray("splash_screen_container", "fg")]

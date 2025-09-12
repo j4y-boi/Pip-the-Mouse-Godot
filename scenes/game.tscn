@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://bbn8hg7verlsy"]
+[gd_scene load_steps=62 format=3 uid="uid://bbn8hg7verlsy"]
 
 [ext_resource type="Script" uid="uid://bduil1pf3acyu" path="res://scripts/savesystem.gd" id="1_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="1_p57ef"]
@@ -23,10 +23,12 @@
 [ext_resource type="Script" uid="uid://ff3du54xkfiy" path="res://scripts/foodZ.gd" id="18_bt5mj"]
 [ext_resource type="Texture2D" uid="uid://b1sdcim1hdl0f" path="res://assets/gui/heart.png" id="20_5newe"]
 [ext_resource type="Texture2D" uid="uid://c4ito5r2grbr8" path="res://assets/gui/arrow.png" id="21_e1j6l"]
+[ext_resource type="PackedScene" uid="uid://fkkjrgm2pbhn" path="res://scenes/menu.tscn" id="21_suyxu"]
 [ext_resource type="Script" uid="uid://du3dhitq1xgi3" path="res://scripts/guibutton.gd" id="22_qnb83"]
 [ext_resource type="AudioStream" uid="uid://dq45eo48vy6tf" path="res://assets/audio/music/game2.ogg" id="24_e1j6l"]
 [ext_resource type="Script" uid="uid://cb1lkn50aewqc" path="res://scripts/bgm.gd" id="25_bhx41"]
 [ext_resource type="AudioStream" uid="uid://b607vnfgaaqnx" path="res://assets/audio/music/game1.mp3" id="26_qnb83"]
+[ext_resource type="PackedScene" uid="uid://dv75sskm1losc" path="res://scenes/icon.tscn" id="28_sww3w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
 atlas = ExtResource("10_ca42v")
@@ -284,6 +286,25 @@ size = Vector2(33.3333, 13.3333)
 
 [node name="game" type="Node2D"]
 
+[node name="fadeout" type="CanvasLayer" parent="."]
+
+[node name="Control2" type="Control" parent="fadeout"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="fadeout/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
 [node name="Save" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_0tnpc")
@@ -372,6 +393,7 @@ position = Vector2(256, -256)
 scale = Vector2(4, 4)
 texture = ExtResource("17_1kice")
 script = ExtResource("18_37s47")
+playScene = ExtResource("21_suyxu")
 
 [node name="arrow" type="Sprite2D" parent="Control/Panel"]
 z_index = -1
@@ -405,6 +427,11 @@ texture = ExtResource("20_5newe")
 [node name="bgm" type="AudioStreamPlayer2D" parent="."]
 script = ExtResource("25_bhx41")
 playlist = Array[AudioStream]([ExtResource("24_e1j6l"), ExtResource("26_qnb83")])
+
+[node name="icon" parent="." instance=ExtResource("28_sww3w")]
+visible = false
+z_index = 999
+position = Vector2(38, 455)
 
 [connection signal="timeout" from="Save/Autosave" to="Save" method="_on_autosave_timeout"]
 [connection signal="timeout" from="Save/Autosave" to="mouse" method="_on_autosave_timeout"]
