@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://bbn8hg7verlsy"]
+[gd_scene load_steps=61 format=3 uid="uid://bbn8hg7verlsy"]
 
 [ext_resource type="Script" uid="uid://bduil1pf3acyu" path="res://scripts/savesystem.gd" id="1_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="1_p57ef"]
@@ -23,7 +23,6 @@
 [ext_resource type="Script" uid="uid://ff3du54xkfiy" path="res://scripts/foodZ.gd" id="18_bt5mj"]
 [ext_resource type="Texture2D" uid="uid://b1sdcim1hdl0f" path="res://assets/gui/heart.png" id="20_5newe"]
 [ext_resource type="Texture2D" uid="uid://c4ito5r2grbr8" path="res://assets/gui/arrow.png" id="21_e1j6l"]
-[ext_resource type="PackedScene" uid="uid://fkkjrgm2pbhn" path="res://scenes/menu.tscn" id="21_suyxu"]
 [ext_resource type="Script" uid="uid://du3dhitq1xgi3" path="res://scripts/guibutton.gd" id="22_qnb83"]
 [ext_resource type="AudioStream" uid="uid://dq45eo48vy6tf" path="res://assets/audio/music/game2.ogg" id="24_e1j6l"]
 [ext_resource type="Script" uid="uid://cb1lkn50aewqc" path="res://scripts/bgm.gd" id="25_bhx41"]
@@ -393,7 +392,6 @@ position = Vector2(256, -256)
 scale = Vector2(4, 4)
 texture = ExtResource("17_1kice")
 script = ExtResource("18_37s47")
-playScene = ExtResource("21_suyxu")
 
 [node name="arrow" type="Sprite2D" parent="Control/Panel"]
 z_index = -1

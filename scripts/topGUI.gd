@@ -9,7 +9,6 @@ extends Sprite2D
 @onready var save_timer: Timer = $"../../Save/Autosave"
 @onready var wait_until_save: Timer = $"../../Save/WaitUntilSave"
 @onready var fade: ColorRect = $"../../fadeout/Control2/ColorRect"
-@export var playScene : PackedScene
 
 #main gui bg vars
 var goDown = false
@@ -49,7 +48,9 @@ func return_to_main():
 	tween.tween_interval(.5)
 	await tween.finished
 	await get_tree().process_frame
-	get_tree().change_scene_to_packed(playScene)
+	
+	var mainmenu = load("res://scenes/menu.tscn") as PackedScene
+	get_tree().change_scene_to_packed(mainmenu)
 
 func random_sentence(lines: Array) -> void:
 	time.text = lines[randi_range(0, lines.size() - 1)]
