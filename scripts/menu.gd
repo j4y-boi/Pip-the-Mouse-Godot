@@ -1,6 +1,6 @@
 extends Control
 
-@export var playScene : PackedScene
+@export var playScene: PackedScene = preload("res://scenes/game.tscn") #FUCK you godot im gonna load it this way and youre gonna be alright with it
 @onready var fg: ColorRect = $fg
 @onready var settingsMenu: Panel = $Settings
 @onready var defaultButtons: VBoxContainer = $button

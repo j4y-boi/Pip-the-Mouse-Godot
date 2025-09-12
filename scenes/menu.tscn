@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://fkkjrgm2pbhn"]
+[gd_scene load_steps=17 format=3 uid="uid://fkkjrgm2pbhn"]
 
 [ext_resource type="Script" uid="uid://dcbs58v14eenv" path="res://scripts/menu.gd" id="1_7jp70"]
 [ext_resource type="Script" uid="uid://buqaipatv1lkm" path="res://scripts/parallax_background.gd" id="1_13sgg"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://bwttrrn16gde2" path="res://assets/bg/art/art1.png" id="6_6cdou"]
 [ext_resource type="Texture2D" uid="uid://dp8csrh220xeo" path="res://exports/logo, art n stuff/itchiobanner.png" id="7_i42df"]
 [ext_resource type="FontFile" uid="uid://btqyhp5s88ei2" path="res://assets/fonts/Delius-Regular.ttf" id="8_7jp70"]
-[ext_resource type="PackedScene" uid="uid://bbn8hg7verlsy" path="res://scenes/game.tscn" id="10_mj5lg"]
 [ext_resource type="AudioStream" uid="uid://d3t63m1qvixkv" path="res://assets/audio/sfx/back.wav" id="12_i42df"]
 [ext_resource type="AudioStream" uid="uid://02eg8op8sim0" path="res://assets/audio/sfx/confirm.wav" id="13_7jp70"]
 [ext_resource type="AudioStream" uid="uid://uopaey8ag42b" path="res://assets/audio/sfx/hover.wav" id="14_mxgkd"]
@@ -35,7 +34,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7jp70")
-playScene = ExtResource("10_mj5lg")
 
 [node name="fullBG" type="Node2D" parent="."]
 
