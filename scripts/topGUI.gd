@@ -68,6 +68,9 @@ func _ready() -> void:
 
 	
 func _process(delta: float) -> void:
+	print(wasHunger)
+	print(topguislide)
+	
 	gametime += delta
 	intgametime = floor(gametime)
 	
@@ -75,10 +78,11 @@ func _process(delta: float) -> void:
 		topguislide = -1
 	elif mouse.feedTimeLeft <= 0:
 		topguislide = -2
+		wasHunger = true
 	elif mouse.feedTimeLeft >= 900:
 		topguislide = -3
 		wasHunger = true
-	elif mouse.feedTimeLeft < 900 and wasHunger:
+	elif (mouse.feedTimeLeft < 900 or mouse.feedTimeLeft > 0) and wasHunger:
 		wasHunger = false
 		topguislide = 999
 		goDown = false

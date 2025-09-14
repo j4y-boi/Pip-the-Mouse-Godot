@@ -12,7 +12,7 @@ config_version=5
 
 config/name="pip-the-mouse-godot"
 config/description="Pip the mouse! He's your friendly little pet mouse, take care of him! Make sure he doesn't die D:"
-config/version="2.2"
+config/version="2.2.1"
 run/main_scene="uid://t1al5hykieb"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)

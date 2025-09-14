@@ -17,7 +17,7 @@ var foodTextures = [
 ]
 
 func _input(event):
-	if event.is_action_pressed("left") and (not panel.goDown or panel.topguislide == -3):
+	if event.is_action_pressed("left") and (panel.topguislide < -1 or not panel.goDown):
 		if not amountSpawned >= spawnLimit:
 			amountSpawned += 1
 			var buffer = food_copy.duplicate() #WHAT THE HELL IS THIS FOR THEN IF I NEED TO ADD IT ANYWAY
