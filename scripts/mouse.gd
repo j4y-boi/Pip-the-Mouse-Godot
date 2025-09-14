@@ -71,7 +71,8 @@ func chooseEvent():
 		else: #otherwise he just looks to the other side and looks back
 			currentAnim = "look"
 			mouseSprite.play("look")
-		print("chose anim: "+currentAnim)
+		if OS.is_debug_build():
+			print("chose anim: "+currentAnim)
 
 func _on_autosave_timeout() -> void:
 	save.contents_to_save.mousex = mouse.position.x

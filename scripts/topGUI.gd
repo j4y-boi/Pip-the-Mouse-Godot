@@ -65,23 +65,18 @@ func _ready() -> void:
 		if child is Control:
 			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-
-	
 func _process(delta: float) -> void:
-	print(wasHunger)
-	print(topguislide)
-	
 	gametime += delta
 	intgametime = floor(gametime)
 	
-	if mouse.dead:
-		topguislide = -1
-	elif mouse.feedTimeLeft <= 0:
+	if mouse.feedTimeLeft <= 0 and not mouse.dead:
 		topguislide = -2
 		wasHunger = true
-	elif mouse.feedTimeLeft >= 900:
+	elif mouse.feedTimeLeft >= 900 and not mouse.dead:
 		topguislide = -3
 		wasHunger = true
+	elif mouse.dead:
+		topguislide = -1
 	elif (mouse.feedTimeLeft < 900 or mouse.feedTimeLeft > 0) and wasHunger:
 		wasHunger = false
 		topguislide = 999
@@ -125,8 +120,9 @@ func _process(delta: float) -> void:
 		goDown = true
 		if lasttime == 0:
 			lasttime = intgametime
+			talkstage = 0
 		
-		if lasttime == 0  and talkstage == 0:
+		if intgametime == lasttime  and talkstage == 0:
 			talkstage += 1
 			save.contents_to_save.leftbehind = true
 			save.saveData()
@@ -207,7 +203,7 @@ func _input(event):
 		await return_to_main()
 	
 	if event.is_action_pressed("up") and canreturn: #IMPORTANT, OTHERWISE THEY MIGHT DELETE THEIR OWN SAVE
-		print("nuked")
+		print("Restarting game...")
 		#restore save, handled by savesystem at restart
 		save.judgement.miceKilled += 1
 		if mouse.aliveTime > save.judgement.longestAlive:
@@ -233,4 +229,7 @@ func _input(event):
 			textured = load("res://assets/gui/heart.png")
 		elif topguislide == 1:
 			textured = load(foodTextures[randi_range(0,len(foodTextures)-1)])
+	
+	if event.is_action_pressed("debugKeybind"):
+		mouse.feedTimeLeft = -7
 		
