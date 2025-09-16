@@ -12,6 +12,5 @@ func on_click():
 		panel.goDown = not panel.goDown
 		if panel.goDown:
 			touchDown = false
-			$".."
 		else:
 			touchDown = true
