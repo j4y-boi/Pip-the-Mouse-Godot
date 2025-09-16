@@ -88,20 +88,22 @@ func _process(delta: float) -> void:
 		else:
 			all.position.y += (end-all.position.y)*delta*2
 			
-		if int(arrow.position.y) < end2-3:
-			arrow.position.y = end2
-		else:
-			arrow.position.y += (end2-arrow.position.y)*delta*2
+		if $arrow/clickarea.touchDown:
+			if int(arrow.position.y) < end2-3:
+				arrow.position.y = end2
+			else:
+				arrow.position.y += (end2-arrow.position.y)*delta*2
 	else:
 		if int(all.position.y) < start+3:
 			all.position.y = start
 		else:
 			all.position.y += (start-all.position.y)*delta*2
 			
-		if int(arrow.position.y) > start2+3:
-			arrow.position.y = start2
-		else:
-			arrow.position.y += (start2-arrow.position.y)*delta*2
+		if $arrow/clickarea.touchDown:
+			if int(arrow.position.y) > start2+3:
+				arrow.position.y = start2
+			else:
+				arrow.position.y += (start2-arrow.position.y)*delta*2
 	
 	# Directly based off of the original PTM Python code
 	var source
@@ -195,6 +197,7 @@ func _input(event):
 			icon.visible = true
 			topguislide = 0
 			textured = load("res://assets/gui/heart.png")
+		$arrow/clickarea.touchDown = true
 		goDown = !goDown
 	
 	if event.is_action_pressed("escape") and not is_exiting:

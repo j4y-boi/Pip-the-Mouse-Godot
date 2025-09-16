@@ -399,10 +399,10 @@ position = Vector2(0, 74.5)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("21_e1j6l")
 
-[node name="Area2D" type="Area2D" parent="Control/Panel/arrow"]
+[node name="clickarea" type="Area2D" parent="Control/Panel/arrow"]
 script = ExtResource("22_qnb83")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Panel/arrow/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Panel/arrow/clickarea"]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_js0lu")
 
