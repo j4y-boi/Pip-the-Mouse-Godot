@@ -9,6 +9,7 @@ extends Sprite2D
 @onready var save_timer: Timer = $"../../Save/Autosave"
 @onready var wait_until_save: Timer = $"../../Save/WaitUntilSave"
 @onready var fade: ColorRect = $"../../fadeout/Control2/ColorRect"
+@onready var pausemenu: Control = $"../../pauseMenu/menu"
 
 #main gui bg vars
 var goDown = false
@@ -34,7 +35,6 @@ var intgametime = 0
 var talkstage = 0
 var wasHunger = false
 var doesreturn = false
-var is_exiting := false
 
 func actual_save():
 	save_timer.stop()
@@ -190,20 +190,15 @@ func _process(delta: float) -> void:
 		#icon.scale = Vector2(beat,beat)
 
 func _input(event):
-	var ableToChange = goDown and not mouse.dead and not topguislide < 0
+	var ableToChange = goDown and not mouse.dead and not topguislide < 0 and not pausemenu.inmenu
 	
-	if event.is_action_pressed("down") and not mouse.dead and not topguislide < 0:
+	if event.is_action_pressed("down") and not mouse.dead and not topguislide < 0 and not pausemenu.inmenu:
 		if topguislide == 999:
 			icon.visible = true
 			topguislide = 0
 			textured = load("res://assets/gui/heart.png")
 		$arrow/clickarea.touchDown = true
 		goDown = !goDown
-	
-	if event.is_action_pressed("escape") and not is_exiting:
-		is_exiting = true
-		await actual_save()
-		await return_to_main()
 	
 	if event.is_action_pressed("up") and canreturn: #IMPORTANT, OTHERWISE THEY MIGHT DELETE THEIR OWN SAVE
 		print("Restarting game...")

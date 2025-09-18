@@ -5,7 +5,7 @@ extends Node
 @onready var mouse: Node2D = $"../mouse"
 @onready var autosave: Timer = $Autosave
 @onready var wait_until_save: Timer = $WaitUntilSave
-@onready var icon: Node2D = $"../icon"
+@onready var icon: Node2D = $"../fadeout/icon"
 
 const encrypt = true
 

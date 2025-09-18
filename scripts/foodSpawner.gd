@@ -1,6 +1,7 @@
 extends Node2D
 @onready var food_copy: Sprite2D = $foodCopy
 @onready var panel: Sprite2D = $"../Control/Panel"
+@onready var pausemenu: Control = $"../pauseMenu/menu"
 
 signal newFood
 
@@ -17,7 +18,7 @@ var foodTextures = [
 ]
 
 func _input(event):
-	if event.is_action_pressed("left") and (panel.topguislide < -1 or not panel.goDown):
+	if event.is_action_pressed("left") and (panel.topguislide < -1 or not panel.goDown) and not pausemenu.inmenu:
 		if not amountSpawned >= spawnLimit:
 			amountSpawned += 1
 			var buffer = food_copy.duplicate() #WHAT THE HELL IS THIS FOR THEN IF I NEED TO ADD IT ANYWAY
