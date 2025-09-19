@@ -5,21 +5,28 @@ extends Control
 @onready var settingsMenu: Panel = $Settings
 @onready var defaultButtons: VBoxContainer = $button
 @onready var logo: Sprite2D = $Itchiobanner
+@onready var settingVars: Node = $settingsVar
+@onready var contents: VBoxContainer = $Settings/contents
 
 var start = -95
 var end = 100
 var time = 0.0
+const save_location = "user://savefile.json"
 
 func _ready() -> void:
 	fg.modulate.a = 0.0
 	fg.visible = false
 	logo.position.y = start
+	settingVars.settingLoad()
+	$Settings/contents/musicvolume.value = settingVars.musicVolume
+	$Settings/contents/sfxvolume.value = settingVars.sfxVolume
+	$Settings/contents/autosave/autosaveInterval.value = settingVars.autosaveTime
 
 func _process(delta: float) -> void:
+	$Settings/contents/autosave/timeLabel.text = str(int($Settings/contents/autosave/autosaveInterval.value))+'s'
+	
 	time += delta
-	
 	logo.rotation = (sin(time))/10
-	
 	if int(logo.position.y) > end-3:
 		logo.position.y = end
 	else:
@@ -51,6 +58,7 @@ func _on_start_pressed() -> void:
 func _on_back_pressed() -> void:
 	defaultButtons.visible = true
 	settingsMenu.visible = false
+	settingVars.settingLoad()
 
 func _on_label_gui_input(event: InputEvent) -> void:
 	pass

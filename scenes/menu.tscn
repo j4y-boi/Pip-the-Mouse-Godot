@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://fkkjrgm2pbhn"]
+[gd_scene load_steps=18 format=3 uid="uid://fkkjrgm2pbhn"]
 
 [ext_resource type="Script" uid="uid://dcbs58v14eenv" path="res://scripts/menu.gd" id="1_7jp70"]
 [ext_resource type="Script" uid="uid://buqaipatv1lkm" path="res://scripts/parallax_background.gd" id="1_13sgg"]
 [ext_resource type="Texture2D" uid="uid://b8vgj0dabgab2" path="res://assets/bg/sky.png" id="2_i6lef"]
+[ext_resource type="Script" uid="uid://bsbcad8h7ir0m" path="res://scripts/settings.gd" id="2_i42df"]
 [ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="3_70i5f"]
 [ext_resource type="Script" uid="uid://cdu5j4ld43gc4" path="res://scripts/bg2.gd" id="4_mj5lg"]
 [ext_resource type="Texture2D" uid="uid://cd6786e7annhl" path="res://assets/bg/rooms/room1.png" id="5_ufwb2"]
@@ -34,6 +35,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7jp70")
+
+[node name="settingsVar" type="Node" parent="."]
+script = ExtResource("2_i42df")
 
 [node name="fullBG" type="Node2D" parent="."]
 
@@ -76,6 +80,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("7_i42df")
 
 [node name="button" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -108,7 +113,6 @@ theme_override_font_sizes/font_size = 40
 text = "Exit"
 
 [node name="Settings" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -130,7 +134,7 @@ anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -256.0
 offset_right = 256.0
-offset_bottom = 100.0
+offset_bottom = 77.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("8_7jp70")
 theme_override_font_sizes/font_size = 60
@@ -138,54 +142,107 @@ text = "Options"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="Settings"]
+[node name="contents" type="VBoxContainer" parent="Settings"]
+custom_minimum_size = Vector2(256, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -126.0
-offset_top = -40.0
-offset_right = 126.0
-offset_bottom = -17.0
+offset_left = -128.0
+offset_top = -77.0
+offset_right = 128.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "this'll do something later i swear"
 
-[node name="Label2" type="Label" parent="Settings"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -126.0
-offset_top = 27.0
-offset_right = 126.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -0.0374824
-text = "todo: add functionality (lmao)"
+[node name="autosaveLabel" type="Label" parent="Settings/contents"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 20
+text = "Autosave Interval"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="HSlider" type="HSlider" parent="Settings"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -130.0
-offset_top = -10.0
-offset_right = 130.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="autosave" type="HBoxContainer" parent="Settings/contents"]
+layout_mode = 2
+alignment = 1
+
+[node name="timeLabel" type="Label" parent="Settings/contents/autosave"]
+layout_mode = 2
+text = "30s"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="autosaveInterval" type="HSlider" parent="Settings/contents/autosave"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
 theme_override_styles/slider = SubResource("StyleBoxLine_7jp70")
 theme_override_styles/grabber_area = SubResource("StyleBoxLine_mxgkd")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_g6gyw")
-value = 50.0
+min_value = 30.0
+max_value = 120.0
+value = 30.0
+rounded = true
+
+[node name="musicLabel" type="Label" parent="Settings/contents"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 20
+text = "Music Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="music" type="HBoxContainer" parent="Settings/contents"]
+layout_mode = 2
+alignment = 1
+
+[node name="timeLabel" type="Label" parent="Settings/contents/music"]
+layout_mode = 2
+text = "30s"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="autosaveInterval" type="HSlider" parent="Settings/contents/music"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_7jp70")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_mxgkd")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_g6gyw")
+min_value = 30.0
+max_value = 120.0
+value = 30.0
+rounded = true
+
+[node name="sfxLabel" type="Label" parent="Settings/contents"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 20
+text = "SFX Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sfx" type="HBoxContainer" parent="Settings/contents"]
+layout_mode = 2
+alignment = 1
+
+[node name="timeLabel" type="Label" parent="Settings/contents/sfx"]
+layout_mode = 2
+text = "30s"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="autosaveInterval" type="HSlider" parent="Settings/contents/sfx"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_7jp70")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_mxgkd")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_g6gyw")
+min_value = 30.0
+max_value = 120.0
+value = 30.0
+rounded = true
 
 [node name="back" type="Button" parent="Settings"]
 custom_minimum_size = Vector2(200, 0)
