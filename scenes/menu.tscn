@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://fkkjrgm2pbhn"]
+[gd_scene load_steps=19 format=3 uid="uid://fkkjrgm2pbhn"]
 
 [ext_resource type="Script" uid="uid://dcbs58v14eenv" path="res://scripts/menu.gd" id="1_7jp70"]
 [ext_resource type="Script" uid="uid://buqaipatv1lkm" path="res://scripts/parallax_background.gd" id="1_13sgg"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bwttrrn16gde2" path="res://assets/bg/art/art1.png" id="6_6cdou"]
 [ext_resource type="Texture2D" uid="uid://dp8csrh220xeo" path="res://exports/logo, art n stuff/itchiobanner.png" id="7_i42df"]
 [ext_resource type="FontFile" uid="uid://btqyhp5s88ei2" path="res://assets/fonts/Delius-Regular.ttf" id="8_7jp70"]
+[ext_resource type="Script" uid="uid://dafy6vwcfjdrk" path="res://scripts/buttonAudio.gd" id="10_7jp70"]
 [ext_resource type="AudioStream" uid="uid://d3t63m1qvixkv" path="res://assets/audio/sfx/back.wav" id="12_i42df"]
 [ext_resource type="AudioStream" uid="uid://02eg8op8sim0" path="res://assets/audio/sfx/confirm.wav" id="13_7jp70"]
 [ext_resource type="AudioStream" uid="uid://uopaey8ag42b" path="res://assets/audio/sfx/hover.wav" id="14_mxgkd"]
@@ -80,7 +81,6 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("7_i42df")
 
 [node name="button" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -92,6 +92,7 @@ offset_top = -294.0
 offset_right = 107.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("10_7jp70")
 
 [node name="start" type="Button" parent="button"]
 layout_mode = 2
@@ -113,6 +114,7 @@ theme_override_font_sizes/font_size = 40
 text = "Exit"
 
 [node name="Settings" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -169,7 +171,7 @@ vertical_alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="timeLabel" type="Label" parent="Settings/contents/autosave"]
+[node name="label" type="Label" parent="Settings/contents/autosave"]
 layout_mode = 2
 text = "30s"
 horizontal_alignment = 1
@@ -198,21 +200,19 @@ vertical_alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="timeLabel" type="Label" parent="Settings/contents/music"]
+[node name="label" type="Label" parent="Settings/contents/music"]
 layout_mode = 2
-text = "30s"
+text = "75%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="autosaveInterval" type="HSlider" parent="Settings/contents/music"]
+[node name="musicVolume" type="HSlider" parent="Settings/contents/music"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_styles/slider = SubResource("StyleBoxLine_7jp70")
 theme_override_styles/grabber_area = SubResource("StyleBoxLine_mxgkd")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_g6gyw")
-min_value = 30.0
-max_value = 120.0
-value = 30.0
+value = 75.0
 rounded = true
 
 [node name="sfxLabel" type="Label" parent="Settings/contents"]
@@ -227,21 +227,19 @@ vertical_alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="timeLabel" type="Label" parent="Settings/contents/sfx"]
+[node name="label" type="Label" parent="Settings/contents/sfx"]
 layout_mode = 2
-text = "30s"
+text = "75%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="autosaveInterval" type="HSlider" parent="Settings/contents/sfx"]
+[node name="sfxVolume" type="HSlider" parent="Settings/contents/sfx"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_styles/slider = SubResource("StyleBoxLine_7jp70")
 theme_override_styles/grabber_area = SubResource("StyleBoxLine_mxgkd")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_g6gyw")
-min_value = 30.0
-max_value = 120.0
-value = 30.0
+value = 75.0
 rounded = true
 
 [node name="back" type="Button" parent="Settings"]
@@ -262,16 +260,6 @@ theme_override_fonts/font = ExtResource("8_7jp70")
 theme_override_font_sizes/font_size = 40
 text = "Back"
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = -31.0
-offset_top = 478.0
-offset_right = 230.0
-offset_bottom = 520.0
-theme_override_font_sizes/font_size = 20
-text = "created by j4y_boi"
-horizontal_alignment = 1
-
 [node name="fg" type="ColorRect" parent="."]
 visible = false
 z_index = 20
@@ -282,6 +270,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="link" type="Button" parent="."]
+texture_filter = 2
+layout_mode = 0
+offset_top = 480.0
+offset_right = 175.0
+offset_bottom = 514.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 20
+text = "created by j4y_boi"
+flat = true
 
 [node name="back" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_i42df")
@@ -300,8 +300,12 @@ stream = ExtResource("15_7jp70")
 autoplay = true
 bus = &"Music"
 
+[connection signal="mouse_entered" from="button/start" to="button" method="_on_start_mouse_entered"]
 [connection signal="pressed" from="button/start" to="." method="_on_start_pressed"]
+[connection signal="mouse_entered" from="button/settings" to="button" method="_on_settings_mouse_entered"]
 [connection signal="pressed" from="button/settings" to="." method="_on_settings_pressed"]
+[connection signal="mouse_entered" from="button/quit" to="button" method="_on_quit_mouse_entered"]
 [connection signal="pressed" from="button/quit" to="." method="_on_quit_pressed"]
+[connection signal="mouse_entered" from="Settings/back" to="button" method="_on_back_mouse_entered"]
 [connection signal="pressed" from="Settings/back" to="." method="_on_back_pressed"]
-[connection signal="gui_input" from="Label" to="." method="_on_label_gui_input"]
+[connection signal="pressed" from="link" to="." method="_on_link_pressed"]

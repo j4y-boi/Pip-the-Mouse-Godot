@@ -6,25 +6,46 @@ extends Control
 @onready var defaultButtons: VBoxContainer = $button
 @onready var logo: Sprite2D = $Itchiobanner
 @onready var settingVars: Node = $settingsVar
-@onready var contents: VBoxContainer = $Settings/contents
+
 
 var start = -95
 var end = 100
 var time = 0.0
 const save_location = "user://savefile.json"
 
+var music_bus = AudioServer.get_bus_index("Music")
+var sfx_bus = AudioServer.get_bus_index("SFX")
+
+func settingSetup():
+	await settingVars.settingLoad()
+	$Settings/contents/music/musicVolume.value = settingVars.musicVolume
+	$Settings/contents/sfx/sfxVolume.value = settingVars.sfxVolume
+	$Settings/contents/autosave/autosaveInterval.value = settingVars.autosaveTime
+	
+func percentVolumeTodB(percent: float) -> float:
+	if percent <= 0.0:
+		return -80.0  # idk  this is how low the audio mixer goes so ig that its silent
+	return 50.0 * log(percent / 100.0) / log(10) #nahhh cuz why humans dont hear linearly frfr
+
 func _ready() -> void:
 	fg.modulate.a = 0.0
 	fg.visible = false
 	logo.position.y = start
-	settingVars.settingLoad()
-	$Settings/contents/musicvolume.value = settingVars.musicVolume
-	$Settings/contents/sfxvolume.value = settingVars.sfxVolume
-	$Settings/contents/autosave/autosaveInterval.value = settingVars.autosaveTime
-
-func _process(delta: float) -> void:
-	$Settings/contents/autosave/timeLabel.text = str(int($Settings/contents/autosave/autosaveInterval.value))+'s'
+	settingSetup()
 	
+func _process(delta: float) -> void:
+	if settingsMenu.visible:
+		$Settings/contents/autosave/label.text = str(int($Settings/contents/autosave/autosaveInterval.value))+'s'
+		$Settings/contents/music/label.text = str(int($Settings/contents/music/musicVolume.value))+'%'
+		$Settings/contents/sfx/label.text = str(int($Settings/contents/sfx/sfxVolume.value))+'%'
+		
+		settingVars.musicVolume = $Settings/contents/music/musicVolume.value
+		settingVars.sfxVolume = $Settings/contents/sfx/sfxVolume.value
+		settingVars.autosaveTime = $Settings/contents/autosave/autosaveInterval.value
+		
+	AudioServer.set_bus_volume_db(music_bus, percentVolumeTodB(settingVars.musicVolume))
+	AudioServer.set_bus_volume_db(sfx_bus, percentVolumeTodB(settingVars.sfxVolume))
+
 	time += delta
 	logo.rotation = (sin(time))/10
 	if int(logo.position.y) > end-3:
@@ -44,6 +65,7 @@ func _on_quit_pressed() -> void:
 func _on_settings_pressed() -> void:
 	defaultButtons.visible = false
 	settingsMenu.visible = true
+	settingSetup()
 
 func _on_start_pressed() -> void:
 	fg.visible = true
@@ -58,9 +80,7 @@ func _on_start_pressed() -> void:
 func _on_back_pressed() -> void:
 	defaultButtons.visible = true
 	settingsMenu.visible = false
-	settingVars.settingLoad()
+	settingVars.settingSave()
 
-func _on_label_gui_input(event: InputEvent) -> void:
-	pass
-	#if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-		#OS.shell_open("https://j4y-boi.itch.io/")
+func _on_link_pressed() -> void:
+	OS.shell_open("https://j4y-boi.itch.io/")

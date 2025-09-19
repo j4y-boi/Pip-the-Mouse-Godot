@@ -300,6 +300,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="."]
+bus = &"Music"
 script = ExtResource("25_bhx41")
 playlist = Array[AudioStream]([ExtResource("24_e1j6l"), ExtResource("26_qnb83")])
 
