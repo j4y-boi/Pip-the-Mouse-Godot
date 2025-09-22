@@ -1,11 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://fkkjrgm2pbhn"]
+[gd_scene load_steps=18 format=3 uid="uid://fkkjrgm2pbhn"]
 
 [ext_resource type="Script" uid="uid://dcbs58v14eenv" path="res://scripts/menu.gd" id="1_7jp70"]
 [ext_resource type="Script" uid="uid://buqaipatv1lkm" path="res://scripts/parallax_background.gd" id="1_13sgg"]
 [ext_resource type="Texture2D" uid="uid://b8vgj0dabgab2" path="res://assets/bg/sky.png" id="2_i6lef"]
 [ext_resource type="Script" uid="uid://bsbcad8h7ir0m" path="res://scripts/settings.gd" id="2_i42df"]
 [ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="3_70i5f"]
-[ext_resource type="Script" uid="uid://cdu5j4ld43gc4" path="res://scripts/bg2.gd" id="4_mj5lg"]
 [ext_resource type="Texture2D" uid="uid://cd6786e7annhl" path="res://assets/bg/rooms/room1.png" id="5_ufwb2"]
 [ext_resource type="Texture2D" uid="uid://bwttrrn16gde2" path="res://assets/bg/art/art1.png" id="6_6cdou"]
 [ext_resource type="Texture2D" uid="uid://dp8csrh220xeo" path="res://exports/logo, art n stuff/itchiobanner.png" id="7_i42df"]
@@ -63,7 +62,6 @@ texture = ExtResource("3_70i5f")
 
 [node name="bg" type="Node2D" parent="fullBG"]
 z_index = -1
-script = ExtResource("4_mj5lg")
 
 [node name="room" type="Sprite2D" parent="fullBG/bg"]
 position = Vector2(256, 256)

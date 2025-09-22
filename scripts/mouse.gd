@@ -8,7 +8,7 @@ extends Node2D
 signal ateFood(food:String)
 
 #some config
-var eventsBeforeSleep = 5
+var eventsBeforeSleep = 6
 var nutritionalValue = 10
 #
 
@@ -82,7 +82,7 @@ func _on_autosave_timeout() -> void:
 	save.contents_to_save.dead = dead
 
 func _on_event_timeout() -> void:
-	if not consecutiveEvents >= eventsBeforeSleep:
+	if (not consecutiveEvents >= eventsBeforeSleep) or (%gameManager.isNight and consecutiveEvents >= eventsBeforeSleep-5):
 		eventTimer.wait_time = randi_range(5,10)
 		chooseEvent()
 		eventTimer.start()
