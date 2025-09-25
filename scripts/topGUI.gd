@@ -1,15 +1,15 @@
 extends Sprite2D
 @onready var all: Sprite2D = $"."
-@onready var mouse: Node2D = $"../../mouse"
+@onready var mouse: Node2D = $"../../../mouse"
 @onready var icon: Sprite2D = $icon
 @onready var time: Label = $Label
 @onready var arrow: Sprite2D = $arrow
-@onready var food_authority: Node2D = $"../../foodAuthority"
+@onready var food_authority: Node2D = $"../../../foodAuthority"
 @onready var save: Node = %Save
-@onready var save_timer: Timer = $"../../Save/Autosave"
-@onready var wait_until_save: Timer = $"../../Save/WaitUntilSave"
-@onready var fade: ColorRect = $"../../fadeout/Control2/ColorRect"
-@onready var pausemenu: Control = $"../../pauseMenu/menu"
+@onready var save_timer: Timer = $"../../../Save/Autosave"
+@onready var wait_until_save: Timer = $"../../../Save/WaitUntilSave"
+@onready var fade: ColorRect = $"../../../fadeout/Control2/ColorRect"
+@onready var pausemenu: Control = $"../../../pauseMenu/menu"
 
 #main gui bg vars
 var goDown = false
@@ -61,9 +61,6 @@ func _ready() -> void:
 	fade.visible = false
 	fade.color = Color.BLACK
 	fade.modulate.a = 0.0
-	for child in $"../../fadeout".get_children(): # im sorry, i generated these three line with ai
-		if child is Control:
-			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _process(delta: float) -> void:
 	gametime += delta

@@ -1,6 +1,6 @@
 extends Node2D
 @onready var food_copy: Sprite2D = $foodCopy
-@onready var panel: Sprite2D = $"../Control/Panel"
+@onready var panel: Sprite2D = $"../gui/Control/Panel"
 @onready var pausemenu: Control = $"../pauseMenu/menu"
 
 signal newFood

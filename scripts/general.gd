@@ -2,12 +2,14 @@ extends Node
 @export var soundtrack: Array[AudioStream] = []
 @onready var player: AudioStreamPlayer2D = $"../bgm"
 @onready var inside_light: CanvasModulate = $"../insideLight"
-@onready var outside_light: CanvasModulate = $"../ParallaxBackground/outsideLight"
+@onready var sky: Sprite2D = $"../ParallaxBackground/ParallaxLayer/sky"
+@onready var clouds: Sprite2D = $"../ParallaxBackground/ParallaxLayer/Sprite2D"
+
 
 var song = 0
 var gametime = 0.0
 var intgametime = 0
-var daynightcycle = 10
+var daynightcycle = 120
 
 var isNight = false
 var intransition = false
@@ -30,10 +32,12 @@ func _on_bgm_finished() -> void:
 func nightMode(night):
 	var tween = self.create_tween()
 	if night:
-		tween.tween_property(outside_light, "color",Color(0.25, 0.25, 0.25, 1), 1)
+		tween.tween_property(sky, "modulate",Color(0.183, 0.056, 0.202, 1), 1)
+		tween.tween_property(clouds, "modulate",Color(0.37, 0.37, 0.37, 1), 1)
 		tween.tween_property(inside_light, "color",Color(0.5, 0.5, 0.5, 1), 1)
 	else:
-		tween.tween_property(outside_light, "color",Color(1, 1, 1, 1), 1)
+		tween.tween_property(sky, "modulate",Color(1, 1, 1, 1), 1)
+		tween.tween_property(clouds, "modulate",Color(1, 1, 1, 1), 1)
 		tween.tween_property(inside_light, "color",Color(1, 1, 1, 1), 1)
 	await tween.finished
 	intransition = false

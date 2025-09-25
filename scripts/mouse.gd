@@ -8,7 +8,7 @@ extends Node2D
 signal ateFood(food:String)
 
 #some config
-var eventsBeforeSleep = 6
+var eventsBeforeSleep = 5
 var nutritionalValue = 10
 #
 
@@ -24,6 +24,7 @@ var speed = 100.0
 
 var currentFood:String
 var dead = false
+var lastnight = false
 
 func _ready() -> void:
 	mouse.position.x = save.contents_to_save.mousex
@@ -82,15 +83,22 @@ func _on_autosave_timeout() -> void:
 	save.contents_to_save.dead = dead
 
 func _on_event_timeout() -> void:
-	if (not consecutiveEvents >= eventsBeforeSleep) or (%gameManager.isNight and consecutiveEvents >= eventsBeforeSleep-5):
+	var max_events = eventsBeforeSleep
+	if %gameManager.isNight:
+		max_events = 0
+		print("oh damn its dark already?")
+		
+	if consecutiveEvents <= max_events:
 		eventTimer.wait_time = randi_range(5,10)
 		chooseEvent()
 		eventTimer.start()
-	else:
+		print("ill go on move")
+	else:	
 		if not dead:
 			consecutiveEvents = 0
 			currentAnim = "sleep"
 			mouseSprite.play("sleep")
+			print("slepp")
 
 func _on_sprite_animation_finished() -> void:
 	returnToIdle()
@@ -101,6 +109,14 @@ func _input(event):
 		eventTimer.start()
 
 func _process(delta: float) -> void:
+	if %gameManager.isNight and not lastnight:
+		lastnight = true
+		eventTimer.stop()
+		eventTimer.emit_signal("timeout")
+	elif not %gameManager.isNight and lastnight:
+		lastnight = false
+		
+	
 	if not dead:
 		aliveTime += delta # i dunno if there are better way to do this
 		feedTimeLeft -= delta
