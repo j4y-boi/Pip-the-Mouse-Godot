@@ -2,19 +2,20 @@ extends Node
 @export var soundtrack: Array[AudioStream] = []
 @onready var player: AudioStreamPlayer2D = $"../bgm"
 @onready var inside_light: CanvasModulate = $"../insideLight"
-@onready var sky: Sprite2D = $"../ParallaxBackground/ParallaxLayer/sky"
-@onready var clouds: Sprite2D = $"../ParallaxBackground/ParallaxLayer/Sprite2D"
-
+@onready var sky: Sprite2D = $"../bg/ParallaxBackground/ParallaxLayer/sky"
+@onready var clouds: Sprite2D = $"../bg/ParallaxBackground/ParallaxLayer/Sprite2D"
 
 var song = 0
 var gametime = 0.0
 var intgametime = 0
-var daynightcycle = 120
+var daynightcycle = 10
 
-var isNight = false
+var isNight = true
 var intransition = false
 
 func _ready() -> void:
+	randomize()
+	soundtrack.shuffle()
 	play_song(song)
 	song = (song+1)%len(soundtrack)
 

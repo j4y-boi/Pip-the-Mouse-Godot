@@ -85,7 +85,7 @@ func _on_autosave_timeout() -> void:
 func _on_event_timeout() -> void:
 	var max_events = eventsBeforeSleep
 	if %gameManager.isNight:
-		max_events = 0
+		max_events = -1
 		print("oh damn its dark already?")
 		
 	if consecutiveEvents <= max_events:
@@ -97,6 +97,7 @@ func _on_event_timeout() -> void:
 		if not dead:
 			consecutiveEvents = 0
 			currentAnim = "sleep"
+			mouseSprite.flip_h = false
 			mouseSprite.play("sleep")
 			print("slepp")
 
@@ -105,11 +106,12 @@ func _on_sprite_animation_finished() -> void:
 	
 func _input(event):
 	if currentAnim == "sleep" and event is InputEventKey and event.pressed:
-		returnToIdle()
-		eventTimer.start()
+		if not %gameManager.isNight or food_authority.amountSpawned > 0:
+			returnToIdle()
+			eventTimer.start()
 
 func _process(delta: float) -> void:
-	if %gameManager.isNight and not lastnight:
+	if %gameManager.isNight and not lastnight and currentAnim == "idle" and food_authority.amountSpawned == 0:
 		lastnight = true
 		eventTimer.stop()
 		eventTimer.emit_signal("timeout")

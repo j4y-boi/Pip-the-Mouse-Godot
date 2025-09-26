@@ -16,6 +16,8 @@ var foodTextures = [
 	"res://assets/food/sunflowerseed.png",
 	"res://assets/food/blueberry.png",
 ]
+func _ready() -> void:
+	food_copy.visible = false
 
 func _input(event):
 	if event.is_action_pressed("left") and (panel.topguislide < -1 or not panel.goDown) and not pausemenu.inmenu:

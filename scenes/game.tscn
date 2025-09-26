@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dkapqpmim1ve7" path="res://scripts/general.gd" id="1_sgl2t"]
 [ext_resource type="Script" uid="uid://buqaipatv1lkm" path="res://scripts/parallax_background.gd" id="1_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://cd6786e7annhl" path="res://assets/bg/rooms/room1.png" id="2_0tnpc"]
+[ext_resource type="AudioStream" uid="uid://dwomatv0okacf" path="res://assets/audio/music/game3.mp3" id="4_suyxu"]
 [ext_resource type="Texture2D" uid="uid://b8vgj0dabgab2" path="res://assets/bg/sky.png" id="5_iywne"]
 [ext_resource type="Script" uid="uid://tc034ylcdvut" path="res://scripts/pausemenu.gd" id="5_suyxu"]
 [ext_resource type="Texture2D" uid="uid://bwttrrn16gde2" path="res://assets/bg/art/art1.png" id="6_p57ef"]
@@ -22,7 +23,6 @@
 [ext_resource type="Texture2D" uid="uid://btn2g4c20qdej" path="res://assets/food/apple_slice.png" id="17_qnb83"]
 [ext_resource type="FontFile" uid="uid://btqyhp5s88ei2" path="res://assets/fonts/Delius-Regular.ttf" id="17_ssvqc"]
 [ext_resource type="Script" uid="uid://dl6unu3a38hgi" path="res://scripts/topGUI.gd" id="18_37s47"]
-[ext_resource type="Script" uid="uid://ff3du54xkfiy" path="res://scripts/foodZ.gd" id="18_bt5mj"]
 [ext_resource type="Texture2D" uid="uid://b1sdcim1hdl0f" path="res://assets/gui/heart.png" id="20_5newe"]
 [ext_resource type="Texture2D" uid="uid://c4ito5r2grbr8" path="res://assets/gui/arrow.png" id="21_e1j6l"]
 [ext_resource type="Script" uid="uid://du3dhitq1xgi3" path="res://scripts/guibutton.gd" id="22_qnb83"]
@@ -289,7 +289,7 @@ animations = [{
 [node name="gameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_sgl2t")
-soundtrack = Array[AudioStream]([ExtResource("24_e1j6l"), ExtResource("26_qnb83")])
+soundtrack = Array[AudioStream]([ExtResource("24_e1j6l"), ExtResource("26_qnb83"), ExtResource("4_suyxu")])
 
 [node name="Save" type="Node" parent="."]
 unique_name_in_owner = true
@@ -382,6 +382,7 @@ texture = ExtResource("20_5newe")
 
 [node name="Button" type="Button" parent="gui/Control"]
 z_index = 999
+layout_mode = 0
 offset_left = 450.0
 offset_top = 450.0
 offset_right = 718.0
@@ -508,14 +509,32 @@ script = ExtResource("16_5newe")
 [node name="foodCopy" type="Sprite2D" parent="foodAuthority"]
 visible = false
 z_index = 5
-position = Vector2(328, 400)
-scale = Vector2(3, 3)
+position = Vector2(274, 342)
+scale = Vector2(2.5, 2.5)
 skew = 0.0314159
 texture = ExtResource("17_qnb83")
-script = ExtResource("18_bt5mj")
 
 [node name="bg" type="Node2D" parent="."]
 z_index = -1000
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="bg"]
+layer = -3
+script = ExtResource("1_u5sy4")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="bg/ParallaxBackground"]
+z_index = -3
+motion_mirroring = Vector2(512, 0)
+
+[node name="sky" type="Sprite2D" parent="bg/ParallaxBackground/ParallaxLayer"]
+z_index = -3
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("5_iywne")
+
+[node name="Sprite2D" type="Sprite2D" parent="bg/ParallaxBackground/ParallaxLayer"]
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = ExtResource("1_p57ef")
 
 [node name="room" type="Sprite2D" parent="bg"]
 position = Vector2(256, 256)
@@ -526,25 +545,6 @@ texture = ExtResource("2_0tnpc")
 position = Vector2(256, 256)
 scale = Vector2(4, 4)
 texture = ExtResource("6_p57ef")
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-layer = -3
-script = ExtResource("1_u5sy4")
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-z_index = -3
-motion_mirroring = Vector2(512, 0)
-
-[node name="sky" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-z_index = -3
-position = Vector2(256, 256)
-scale = Vector2(4, 4)
-texture = ExtResource("5_iywne")
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(256, 256)
-scale = Vector2(4, 4)
-texture = ExtResource("1_p57ef")
 
 [node name="insideLight" type="CanvasModulate" parent="."]
 
