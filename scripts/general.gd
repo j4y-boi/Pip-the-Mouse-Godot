@@ -37,8 +37,8 @@ func nightMode(night):
 		tween.tween_property(clouds, "modulate",Color(0.37, 0.37, 0.37, 1), 1)
 		tween.tween_property(inside_light, "color",Color(0.5, 0.5, 0.5, 1), 1)
 	else:
-		tween.tween_property(sky, "modulate",Color(1, 1, 1, 1), 1)
 		tween.tween_property(clouds, "modulate",Color(1, 1, 1, 1), 1)
+		tween.tween_property(sky, "modulate",Color(1, 1, 1, 1), 1)
 		tween.tween_property(inside_light, "color",Color(1, 1, 1, 1), 1)
 	await tween.finished
 	intransition = false

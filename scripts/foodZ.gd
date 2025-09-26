@@ -8,7 +8,6 @@ func _ready() -> void:
 	shadow.position = Vector2(2, -4)
 	shadow.modulate = Color(0, 0, 0, 0.4)
 	shadow.z_index = -1
-	shadow.z_as_relative = false
 	shadow.set_script(null) #les hope for the best frfr🙏🙏
 	add_child(shadow)
 	

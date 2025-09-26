@@ -86,20 +86,17 @@ func _on_event_timeout() -> void:
 	var max_events = eventsBeforeSleep
 	if %gameManager.isNight:
 		max_events = -1
-		print("oh damn its dark already?")
 		
 	if consecutiveEvents <= max_events:
 		eventTimer.wait_time = randi_range(5,10)
 		chooseEvent()
 		eventTimer.start()
-		print("ill go on move")
 	else:	
 		if not dead:
 			consecutiveEvents = 0
 			currentAnim = "sleep"
 			mouseSprite.flip_h = false
 			mouseSprite.play("sleep")
-			print("slepp")
 
 func _on_sprite_animation_finished() -> void:
 	returnToIdle()
@@ -118,7 +115,6 @@ func _process(delta: float) -> void:
 	elif not %gameManager.isNight and lastnight:
 		lastnight = false
 		
-	
 	if not dead:
 		aliveTime += delta # i dunno if there are better way to do this
 		feedTimeLeft -= delta
