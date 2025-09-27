@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://bbn8hg7verlsy"]
+[gd_scene load_steps=63 format=3 uid="uid://bbn8hg7verlsy"]
 
 [ext_resource type="Script" uid="uid://bduil1pf3acyu" path="res://scripts/savesystem.gd" id="1_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dxsob3ih0ljvp" path="res://assets/bg/cloud.png" id="1_p57ef"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bvr5vgakcb77g" path="res://assets/pip/sleep_mouse.bmp" id="11_rysoc"]
 [ext_resource type="Texture2D" uid="uid://c2akrqa0o6yec" path="res://assets/pip/walk2_mouse.bmp" id="12_ssvqc"]
 [ext_resource type="Texture2D" uid="uid://c682iw7738y74" path="res://assets/pip/look.png" id="13_ir15t"]
+[ext_resource type="Script" uid="uid://7oixca558sg2" path="res://scripts/sidebar.gd" id="14_sgl2t"]
 [ext_resource type="Script" uid="uid://b0yg3pgbfv1q6" path="res://scripts/foodSpawner.gd" id="16_5newe"]
 [ext_resource type="Texture2D" uid="uid://uscnwqras3le" path="res://assets/gui/panel.png" id="17_1kice"]
 [ext_resource type="Texture2D" uid="uid://btn2g4c20qdej" path="res://assets/food/apple_slice.png" id="17_qnb83"]
@@ -345,7 +346,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
+[node name="Button" type="Button" parent="gui/Control"]
+z_index = 2
+layout_mode = 0
+offset_left = 450.0
+offset_top = 450.0
+offset_right = 718.0
+offset_bottom = 714.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/icon_hover_color = Color(0.775063, 0.775063, 0.775063, 1)
+text = "
+"
+icon = ExtResource("8_sgl2t")
+flat = true
+
 [node name="Panel" type="Sprite2D" parent="gui/Control"]
+unique_name_in_owner = true
+z_index = 4
 position = Vector2(256, -256)
 scale = Vector2(4, 4)
 texture = ExtResource("17_1kice")
@@ -359,6 +376,7 @@ texture = ExtResource("21_e1j6l")
 
 [node name="clickarea" type="Area2D" parent="gui/Control/Panel/arrow"]
 script = ExtResource("22_qnb83")
+isPanel = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="gui/Control/Panel/arrow/clickarea"]
 position = Vector2(0, -8)
@@ -380,19 +398,27 @@ position = Vector2(46.75, 48.5)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("20_5newe")
 
-[node name="Button" type="Button" parent="gui/Control"]
-z_index = 999
-layout_mode = 0
-offset_left = 450.0
-offset_top = 450.0
-offset_right = 718.0
-offset_bottom = 714.0
-scale = Vector2(0.2, 0.2)
-theme_override_colors/icon_hover_color = Color(0.775063, 0.775063, 0.775063, 1)
-text = "
-"
-icon = ExtResource("8_sgl2t")
-flat = true
+[node name="sidebar" type="Sprite2D" parent="gui/Control"]
+unique_name_in_owner = true
+z_index = 3
+position = Vector2(-256, 256)
+rotation = -1.5708
+scale = Vector2(4, 4)
+texture = ExtResource("17_1kice")
+script = ExtResource("14_sgl2t")
+
+[node name="arrow" type="Sprite2D" parent="gui/Control/sidebar"]
+z_index = -1
+position = Vector2(0, 74.5)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("21_e1j6l")
+
+[node name="clickarea" type="Area2D" parent="gui/Control/sidebar/arrow"]
+script = ExtResource("22_qnb83")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="gui/Control/sidebar/arrow/clickarea"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_js0lu")
 
 [node name="pauseMenu" type="CanvasLayer" parent="."]
 layer = 0

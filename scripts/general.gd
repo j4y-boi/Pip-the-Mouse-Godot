@@ -8,7 +8,7 @@ extends Node
 var song = 0
 var gametime = 0.0
 var intgametime = 0
-var daynightcycle = 10
+var daynightcycle = 120
 
 var isNight = true
 var intransition = false
