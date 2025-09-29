@@ -10,9 +10,11 @@ signal ateFood(food:String)
 #some config
 var eventsBeforeSleep = 5
 var nutritionalValue = 10
+var playValue = 30
 #
 
 var feedTimeLeft = 0.0
+var playTimeLeft = 0.0
 
 var aliveTime = 0.0
 var consecutiveEvents = 0
@@ -31,6 +33,7 @@ func _ready() -> void:
 	mouse.position.y = save.contents_to_save.mousey
 	aliveTime = float(save.contents_to_save.timeAlive)
 	feedTimeLeft = float(save.contents_to_save.feedtimeleft)
+	playTimeLeft = float(save.contents_to_save.playTimeLeft)
 	dead = save.contents_to_save.dead
 	mouseSprite.position = Vector2(0,0)
 	eventTimer.start()
@@ -118,6 +121,7 @@ func _process(delta: float) -> void:
 	if not dead:
 		aliveTime += delta # i dunno if there are better way to do this
 		feedTimeLeft -= delta
+		playTimeLeft -= delta
 	
 	# just writing this here so i dont forget
 	if isWalking: #check if mous is wandering
@@ -145,14 +149,22 @@ func _process(delta: float) -> void:
 		currentFood = first_key
 		eventTimer.stop()
 	if not isWalking and currentFood != "": 
-		emit_signal("ateFood", currentFood)
-		feedTimeLeft += nutritionalValue
+		var isToy = currentFood.contains("toy")
+		print(isToy)
+		emit_signal("ateFood", currentFood, isToy)
+		if isToy:
+			playTimeLeft += playValue
+			feedTimeLeft -= int(nutritionalValue/2)
+		else:
+			feedTimeLeft += nutritionalValue
 		currentFood = ""
 		if len(food_authority.foods) == 0:
 			returnToIdle()
 			eventTimer.start()
 		
-	if (feedTimeLeft <= -10 or feedTimeLeft >= 1000) and not dead:
+	var hungerDeathConditon = (feedTimeLeft <= -10 or feedTimeLeft >= 1000)
+	var playDeathCondition = (playTimeLeft <= -10 or playTimeLeft >= 2000)
+	if (hungerDeathConditon or playDeathCondition) and not dead:
 		isWalking = false
 		dead = true
 		eventTimer.stop()

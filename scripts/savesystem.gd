@@ -22,6 +22,7 @@ var contents_to_save: Dictionary = {
 	"leftbehind" = false,
 	"musicvolume" = 75,
 	"sfxvolume" = 75,
+	"playTimeLeft" = 30,
 }
 
 var judgement: Dictionary = {

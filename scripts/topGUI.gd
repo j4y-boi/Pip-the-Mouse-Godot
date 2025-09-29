@@ -16,7 +16,7 @@ var goDown = false
 var start = -256
 var end = -132
 
-var slidelimit = 2
+var slidelimit = 3
 
 var foodTextures:Array
 var textured = load("res://assets/gui/heart.png")
@@ -35,6 +35,7 @@ var intgametime = 0
 var talkstage = 0
 var wasHunger = false
 var doesreturn = false
+var wasLazy = false
 
 func actual_save():
 	save_timer.stop()
@@ -72,10 +73,20 @@ func _process(delta: float) -> void:
 	elif mouse.feedTimeLeft >= 900 and not mouse.dead:
 		topguislide = -3
 		wasHunger = true
+	if mouse.playTimeLeft <= 0 and not mouse.dead:
+		topguislide = -3
+		wasLazy = true
+	elif mouse.playTimeLeft >= 1800 and not mouse.dead:
+		topguislide = -4
+		wasLazy = true
 	elif mouse.dead:
 		topguislide = -1
 	elif (mouse.feedTimeLeft < 900 or mouse.feedTimeLeft > 0) and wasHunger:
 		wasHunger = false
+		topguislide = 999
+		goDown = false
+	elif (mouse.playTimeLeft <= 1800 or mouse.playTimeLeft >= 0) and wasHunger:
+		wasLazy = false
 		topguislide = 999
 		goDown = false
 		
@@ -108,6 +119,8 @@ func _process(delta: float) -> void:
 		source = mouse.aliveTime
 	elif topguislide in [1]:
 		source = mouse.feedTimeLeft
+	elif topguislide in [2]:
+		source = mouse.playTimeLeft
 	else:
 		source = 0	
 	var hours   = int(source / 3600) % 24
@@ -166,6 +179,14 @@ func _process(delta: float) -> void:
 		icon.visible = false
 		goDown = true
 		time.text = "Slow down with the food..."
+	elif topguislide == -2:
+		icon.visible = false
+		goDown = true
+		time.text = "Pip needs exercise!"
+	elif topguislide == -3:
+		icon.visible = false
+		goDown = true
+		time.text = "Slow down with the ball..."
 	elif topguislide == 0:
 		var format_string = "Time alive: %s:%s:%s"
 		time.text = format_string%["%02d" % hours, "%02d" % minutes,"%02d" % seconds]
@@ -180,11 +201,13 @@ func _process(delta: float) -> void:
 		icon.scale = Vector2(0.8,0.8)
 		icon.texture = textured
 		icon.rotation = beat
-	#if topguislide == 2: #adding later
-		#var format_string = "Time alive: %s:%s"
-		#time.text = format_string%["%02d" % minutes,"%02d" % seconds]
-		#var beat = 0.5 + (int(mouse.aliveTime*1.5)%2)*0.1
-		#icon.scale = Vector2(beat,beat)
+	if topguislide == 2: #adding later
+		var format_string = "Needs play in: %s:%s"
+		time.text = format_string%["%02d" % minutes,"%02d" % seconds]
+		var beat = -0.5+(int(mouse.aliveTime)%2)*1
+		icon.scale = Vector2(0.8,0.8)
+		icon.texture = textured
+		icon.rotation = beat
 
 func _input(event):
 	var ableToChange = goDown and not mouse.dead and not topguislide < 0 and not pausemenu.inmenu
@@ -218,12 +241,16 @@ func _input(event):
 			textured = load("res://assets/gui/heart.png")
 		elif topguislide == 1:
 			textured = load(foodTextures[randi_range(0,len(foodTextures)-1)])
+		elif topguislide == 2:
+			textured = load("res://assets/ball.png")
 	if event.is_action_pressed("right") and ableToChange:
 		topguislide = (topguislide + 1) % slidelimit
 		if topguislide == 0:
 			textured = load("res://assets/gui/heart.png")
 		elif topguislide == 1:
 			textured = load(foodTextures[randi_range(0,len(foodTextures)-1)])
+		elif topguislide == 2:
+			textured = load("res://assets/ball.png")
 	
 	if event.is_action_pressed("debugKeybind"):
 		mouse.feedTimeLeft = -7

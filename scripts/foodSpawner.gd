@@ -4,9 +4,14 @@ extends Node2D
 @onready var pausemenu: Control = $"../pauseMenu/menu"
 
 signal newFood
+signal newToy
 
 var amountSpawned = 0
 var spawnLimit = 10
+
+var toysSpawned = 0
+var toyLimit = 1
+
 var foods = {}
 
 var foodTextures = [
@@ -16,32 +21,63 @@ var foodTextures = [
 	"res://assets/food/sunflowerseed.png",
 	"res://assets/food/blueberry.png",
 ]
+func spawn(ball:bool=false):
+	var condition
+	if ball:
+		condition = toysSpawned < toyLimit
+	else:
+		condition = amountSpawned <= spawnLimit
+	
+	if condition:
+		if ball:
+			toysSpawned += 1
+		else:
+			amountSpawned += 1
+		var buffer = food_copy.duplicate() #WHAT THE HELL IS THIS FOR THEN IF I NEED TO ADD IT ANYWAY
+		buffer.position.x = randi_range(65, 447)
+		buffer.position.y = randi_range(342, 446) #note to self: do NOT ever change this outside of pip's range, he'll fuckin' die and keep walking 
+		buffer.set_script(load("res://scripts/foodZ.gd")) #see? im nice with resources, i only add the script after its cloned :)
+		buffer.visible = true
+		if ball:
+			buffer.name = "toy"+str(toysSpawned)
+		else:
+			buffer.name = "food"+str(amountSpawned)
+		
+		var texture
+		if ball:
+			texture = load("res://assets/ball.png")
+		else:
+			texture = load(foodTextures[randi_range(0,len(foodTextures)-1)])
+		buffer.texture = texture
+		
+		add_child(buffer) #<-- THIS, THIS, I HATE THIS. WHY IS THIS.
+		
+		foods[buffer.name] = buffer.position
+		if ball:
+			emit_signal("newToy")
+		else:
+			emit_signal("newFood")
+
 func _ready() -> void:
 	food_copy.visible = false
 
 func _input(event):
-	if event.is_action_pressed("left") and (panel.topguislide < -1 or not panel.goDown) and not pausemenu.inmenu:
-		if not amountSpawned >= spawnLimit:
-			amountSpawned += 1
-			var buffer = food_copy.duplicate() #WHAT THE HELL IS THIS FOR THEN IF I NEED TO ADD IT ANYWAY
-			buffer.position.x = randi_range(65, 447)
-			buffer.position.y = randi_range(342, 446) #note to self: do NOT ever change this outside of pip's range, he'll fuckin' die and keep walking 
-			buffer.set_script(load("res://scripts/foodZ.gd")) #see? im nice with resources, i only add the script after its cloned :)
-			buffer.visible = true
-			buffer.name = "food"+str(amountSpawned)
+	var validKeybind = event.is_action_pressed("left") or event.is_action_pressed("one") or event.is_action_pressed("two")
+	if validKeybind and (panel.topguislide < -1 or not panel.goDown) and not pausemenu.inmenu:
+		if event.is_action_pressed("one"):
+			spawn()
+		elif event.is_action_pressed("two"):
+			spawn(true)
+		else:
+			spawn()
 			
-			var texture = load(foodTextures[randi_range(0,len(foodTextures)-1)])
-			buffer.texture = texture
-			
-			add_child(buffer) #<-- THIS, THIS, I HATE THIS. WHY IS THIS.
-			
-			foods[buffer.name] = buffer.position
-			emit_signal("newFood")
-			
-func _on_mouse_ate_food(food: String) -> void:
+func _on_mouse_ate_food(food: String,istoy:bool=false) -> void:
 	if foods.has(food):
 		foods.erase(food)
-		amountSpawned -= 1
+		if istoy:
+			toysSpawned -= 1
+		else:
+			amountSpawned -= 1
 		var actualfood = get_node_or_null(food) #like the node ig
 		if actualfood: #if the son of a ditch exists
 			actualfood.queue_free() # actually remove it from the scene instead of just out of the dict like before
