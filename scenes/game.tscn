@@ -386,15 +386,16 @@ position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_js0lu")
 
 [node name="Label" type="Label" parent="gui/Control/Panel"]
-offset_left = -61.0
-offset_top = 36.0
-offset_right = 345.0
-offset_bottom = 118.0
+offset_left = -60.75
+offset_top = 33.5
+offset_right = 345.25
+offset_bottom = 126.5
 scale = Vector2(0.3, 0.3)
 theme_override_fonts/font = ExtResource("17_ssvqc")
 theme_override_font_sizes/font_size = 35
-text = "Slow down with the ball..."
+text = "Give him less exercise next time."
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="icon" type="Sprite2D" parent="gui/Control/Panel"]
 position = Vector2(46.75, 48.5)

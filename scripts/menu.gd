@@ -84,3 +84,6 @@ func _on_back_pressed() -> void:
 
 func _on_link_pressed() -> void:
 	OS.shell_open("https://j4y-boi.itch.io/")
+
+func _on_stats_pressed() -> void:
+	pass # Replace with function body.

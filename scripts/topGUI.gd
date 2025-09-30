@@ -152,6 +152,10 @@ func _process(delta: float) -> void:
 				random_sentence(["He starved...","He ate too little...","Did you give him food?"])
 			elif mouse.feedTimeLeft >= 600:
 				random_sentence(["That's too much food...","You fed him too much...","A bit too much food..."])
+			elif mouse.playTimeLeft <= 0:
+				random_sentence(["He had no exercise...","No exercise...?","Too little exercise..."])
+			elif mouse.playTimeLeft >= 1600:
+				random_sentence(["He's exhausted...","Too much exercise...","He's worn out..."])
 			else:
 				random_sentence(["This death wasn't..."])
 		if intgametime == lasttime+10 and talkstage == 2:
@@ -162,6 +166,10 @@ func _process(delta: float) -> void:
 				random_sentence(["He needs to eat.","Mice eat too. Feed him.","Press [LEFT] to feed"])
 			elif mouse.feedTimeLeft >= 600:
 				random_sentence(["Mice eat less.","Don't give too much food.","Feed him less."])
+			elif mouse.playTimeLeft <= 0:
+				random_sentence(["Pip needs exercise.","Mice need exercise.","Moving is healthy."])
+			elif mouse.playTimeLeft >= 1600:
+				random_sentence(["Give him less exercise next time.","Mice need less exercise.","He needs rest too."])
 			else:
 				random_sentence(["Recognized?"])
 		if intgametime == lasttime+15 and talkstage == 3:

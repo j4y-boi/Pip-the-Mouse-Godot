@@ -86,8 +86,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -107.0
-offset_top = -294.0
+offset_top = -317.0
 offset_right = 107.0
+offset_bottom = -23.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("10_7jp70")
@@ -98,6 +99,12 @@ theme_override_fonts/font = ExtResource("8_7jp70")
 theme_override_font_sizes/font_size = 40
 text = "Start Game
 "
+
+[node name="stats" type="Button" parent="button"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 40
+text = "Stats"
 
 [node name="settings" type="Button" parent="button"]
 layout_mode = 2
@@ -300,6 +307,8 @@ bus = &"Music"
 
 [connection signal="mouse_entered" from="button/start" to="button" method="_on_start_mouse_entered"]
 [connection signal="pressed" from="button/start" to="." method="_on_start_pressed"]
+[connection signal="mouse_entered" from="button/stats" to="button" method="_on_stats_mouse_entered"]
+[connection signal="pressed" from="button/stats" to="." method="_on_stats_pressed"]
 [connection signal="mouse_entered" from="button/settings" to="button" method="_on_settings_mouse_entered"]
 [connection signal="pressed" from="button/settings" to="." method="_on_settings_pressed"]
 [connection signal="mouse_entered" from="button/quit" to="button" method="_on_quit_mouse_entered"]
