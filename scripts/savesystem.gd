@@ -81,6 +81,15 @@ func loadData():
 			data2 = judgement.duplicate()
 			success = false
 	else:
+		if FileAccess.file_exists(permanentRecord):
+			var file2
+			file2 = FileAccess.open_encrypted_with_pass(permanentRecord, FileAccess.READ,"pipmousidontactuallyexpectthistobesafejustputtingthishereforfunsies")
+			var data2 = file2.get_var()
+			file2.close()
+			judgement = data2 #i could care less screw you.
+			if typeof(data2) != TYPE_DICTIONARY:
+				data2 = judgement.duplicate()
+				success = false
 		success = false
 
 func _ready() -> void:
@@ -130,5 +139,7 @@ func _on_wait_until_save_timeout() -> void:
 
 func _on_autosave_timeout() -> void:
 	print("Waiting...")
+	if mouse.aliveTime > judgement["longestAlive"]:
+		judgement["longestAlive"] = mouse.aliveTime
 	wait_until_save.start()
 	icon.visible = true

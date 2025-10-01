@@ -150,7 +150,6 @@ func _process(delta: float) -> void:
 		eventTimer.stop()
 	if not isWalking and currentFood != "": 
 		var isToy = currentFood.contains("toy")
-		print(isToy)
 		emit_signal("ateFood", currentFood, isToy)
 		if isToy:
 			playTimeLeft += playValue

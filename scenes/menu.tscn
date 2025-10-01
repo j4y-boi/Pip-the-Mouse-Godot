@@ -265,6 +265,108 @@ theme_override_fonts/font = ExtResource("8_7jp70")
 theme_override_font_sizes/font_size = 40
 text = "Back"
 
+[node name="stats" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -76.0
+offset_right = 150.0
+offset_bottom = 224.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="title" type="Label" parent="stats"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_right = 256.0
+offset_bottom = 77.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 60
+text = "Stats"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="splashText" type="Label" parent="stats"]
+z_index = 1
+layout_mode = 2
+offset_top = 195.0
+offset_right = 300.0
+offset_bottom = 244.0
+theme_override_colors/font_color = Color(1, 1, 0.26, 1)
+theme_override_font_sizes/font_size = 13
+text = "YOU SPENT MORE TIME LETTING HIM DIE THAN PLAYING THE GAME??"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="contents" type="VBoxContainer" parent="stats"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -90.0
+offset_right = 128.0
+offset_bottom = 63.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="aliveTitle" type="Label" parent="stats/contents"]
+layout_mode = 2
+text = "Longest time you kept Pip alive:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="aliveTime" type="Label" parent="stats/contents"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "00:00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="killTitle" type="Label" parent="stats/contents"]
+layout_mode = 2
+text = "Mice you've 💀'ed"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="killed" type="Label" parent="stats/contents"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "281"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="back" type="Button" parent="stats"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -49.0
+offset_top = -70.0
+offset_right = 49.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("8_7jp70")
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
 [node name="fg" type="ColorRect" parent="."]
 visible = false
 z_index = 20
@@ -315,4 +417,6 @@ bus = &"Music"
 [connection signal="pressed" from="button/quit" to="." method="_on_quit_pressed"]
 [connection signal="mouse_entered" from="Settings/back" to="button" method="_on_back_mouse_entered"]
 [connection signal="pressed" from="Settings/back" to="." method="_on_back_pressed"]
+[connection signal="mouse_entered" from="stats/back" to="button" method="_on_back_mouse_entered"]
+[connection signal="pressed" from="stats/back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="link" to="." method="_on_link_pressed"]

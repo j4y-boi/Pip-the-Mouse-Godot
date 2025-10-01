@@ -450,7 +450,6 @@ icon = ExtResource("17_gxtfn")
 
 [node name="pauseMenu" type="CanvasLayer" parent="."]
 layer = 0
-visible = false
 
 [node name="menu" type="Control" parent="pauseMenu"]
 z_index = 1

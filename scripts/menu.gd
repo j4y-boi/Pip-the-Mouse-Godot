@@ -6,7 +6,7 @@ extends Control
 @onready var defaultButtons: VBoxContainer = $button
 @onready var logo: Sprite2D = $Itchiobanner
 @onready var settingVars: Node = $settingsVar
-
+@onready var stats: Panel = $stats
 
 var start = -95
 var end = 100
@@ -16,6 +16,39 @@ const save_location = "user://savefile.json"
 var music_bus = AudioServer.get_bus_index("Music")
 var sfx_bus = AudioServer.get_bus_index("SFX")
 
+const killedMsg = {
+	5: "Woah, good job!",
+	7: "Stiil decent!",
+	14: "Mkay...",
+	20: "...You're supposed to keep Pip alive?",
+	50: "Huh. UHhh? UHHHhh",
+	100: "Okay. What is this?",
+	400: "Buh. HOW??",
+	600: "YOU SPENT MORE TIME LETTING HIM DIE THAN PLAYING THE GAME??"
+}
+
+func statsSetup():
+	const judgement = "user://judgement"
+	if FileAccess.file_exists(judgement):
+		var file = FileAccess.open_encrypted_with_pass(judgement, FileAccess.READ,"pipmousidontactuallyexpectthistobesafejustputtingthishereforfunsies")
+		var data = file.get_var()
+		file.close()
+		var source = data["longestAlive"]
+		var hours   = int(source / 3600) % 24
+		var minutes = int(source / 60) % 60
+		var seconds = int(source) % 60
+		var format_string = "%s:%s:%s"
+		
+		$stats/contents/aliveTime.text = format_string%["%02d" % hours, "%02d" % minutes,"%02d" % seconds]
+		$stats/contents/killed.text = str(data["miceKilled"])
+		
+		var killed = data["miceKilled"]
+		for threshold in killedMsg.keys():
+			if killed <= threshold:
+				$stats/splashText.text = killedMsg[threshold]
+				return
+		$stats/splashText.text = killedMsg[killedMsg.keys().max()]
+		
 func settingSetup():
 	await settingVars.settingLoad()
 	$Settings/contents/music/musicVolume.value = settingVars.musicVolume
@@ -32,6 +65,7 @@ func _ready() -> void:
 	fg.visible = false
 	logo.position.y = start
 	settingSetup()
+	statsSetup()
 	
 func _process(delta: float) -> void:
 	if settingsMenu.visible:
@@ -80,10 +114,13 @@ func _on_start_pressed() -> void:
 func _on_back_pressed() -> void:
 	defaultButtons.visible = true
 	settingsMenu.visible = false
+	stats.visible = false
 	settingVars.settingSave()
 
 func _on_link_pressed() -> void:
 	OS.shell_open("https://j4y-boi.itch.io/")
 
 func _on_stats_pressed() -> void:
-	pass # Replace with function body.
+	defaultButtons.visible = false
+	stats.visible = true
+	statsSetup()

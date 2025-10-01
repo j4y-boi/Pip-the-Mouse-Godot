@@ -58,6 +58,8 @@ func random_sentence(lines: Array) -> void:
 	
 func _ready() -> void:
 	foodTextures = food_authority.foodTextures
+	if not mouse.dead:
+		save.contents_to_save.leftbehind = false
 	doesreturn = save.contents_to_save.leftbehind
 	fade.visible = false
 	fade.color = Color.BLACK
@@ -73,11 +75,11 @@ func _process(delta: float) -> void:
 	elif mouse.feedTimeLeft >= 900 and not mouse.dead:
 		topguislide = -3
 		wasHunger = true
-	if mouse.playTimeLeft <= 0 and not mouse.dead:
-		topguislide = -3
+	elif mouse.playTimeLeft <= 0 and not mouse.dead:
+		topguislide = -4
 		wasLazy = true
 	elif mouse.playTimeLeft >= 1800 and not mouse.dead:
-		topguislide = -4
+		topguislide = -5
 		wasLazy = true
 	elif mouse.dead:
 		topguislide = -1
@@ -85,7 +87,7 @@ func _process(delta: float) -> void:
 		wasHunger = false
 		topguislide = 999
 		goDown = false
-	elif (mouse.playTimeLeft <= 1800 or mouse.playTimeLeft >= 0) and wasHunger:
+	elif (mouse.playTimeLeft <= 1800 or mouse.playTimeLeft >= 0) and wasLazy:
 		wasLazy = false
 		topguislide = 999
 		goDown = false
@@ -130,6 +132,7 @@ func _process(delta: float) -> void:
 	if topguislide == -1:
 		icon.visible = false
 		goDown = true
+		$arrow/clickarea.touchDown = true
 		if lasttime == 0:
 			lasttime = intgametime
 			talkstage = 0
@@ -161,7 +164,7 @@ func _process(delta: float) -> void:
 		if intgametime == lasttime+10 and talkstage == 2:
 			talkstage+=1
 			if doesreturn:
-				random_sentence(["He's still dead.","That didn't help.","Didn't change anything."])
+				random_sentence(["he still die :c","That didn't help.","still ded"])
 			elif mouse.feedTimeLeft <= 0:
 				random_sentence(["He needs to eat.","Mice eat too. Feed him.","Press [LEFT] to feed"])
 			elif mouse.feedTimeLeft >= 600:
@@ -183,18 +186,22 @@ func _process(delta: float) -> void:
 		icon.visible = false
 		goDown = true
 		time.text = "Feed Pip! He's hungry!"
+		$arrow/clickarea.touchDown = true
 	elif topguislide == -3:
 		icon.visible = false
 		goDown = true
 		time.text = "Slow down with the food..."
-	elif topguislide == -2:
+		$arrow/clickarea.touchDown = true
+	elif topguislide == -4:
 		icon.visible = false
 		goDown = true
 		time.text = "Pip needs exercise!"
-	elif topguislide == -3:
+		$arrow/clickarea.touchDown = true
+	elif topguislide == -5:
 		icon.visible = false
 		goDown = true
 		time.text = "Slow down with the ball..."
+		$arrow/clickarea.touchDown = true
 	elif topguislide == 0:
 		var format_string = "Time alive: %s:%s:%s"
 		time.text = format_string%["%02d" % hours, "%02d" % minutes,"%02d" % seconds]
@@ -231,10 +238,10 @@ func _input(event):
 	if event.is_action_pressed("up") and canreturn: #IMPORTANT, OTHERWISE THEY MIGHT DELETE THEIR OWN SAVE
 		print("Restarting game...")
 		#restore save, handled by savesystem at restart
-		save.judgement.miceKilled += 1
-		if mouse.aliveTime > save.judgement.longestAlive:
-			save.judgement.longestAlive = mouse.aliveTime
-			actual_save()
+		save.judgement["miceKilled"] += 1
+		if mouse.aliveTime > save.judgement["longestAlive"]:
+			save.judgement["longestAlive"] = mouse.aliveTime
+			await actual_save()
 		
 		var save_path = "user://savefile.json"
 		if FileAccess.file_exists(save_path):
@@ -261,5 +268,5 @@ func _input(event):
 			textured = load("res://assets/ball.png")
 	
 	if event.is_action_pressed("debugKeybind"):
-		mouse.feedTimeLeft = -7
+		mouse.playTimeLeft = -7
 		
